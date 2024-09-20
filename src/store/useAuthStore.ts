@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from "zustand";
 
-
 // interface AuthStoreInterface {
 //   authenticated: boolean; 
 //   setAuthentication: (val: boolean) => void;
