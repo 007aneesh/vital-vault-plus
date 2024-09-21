@@ -39,6 +39,30 @@ const employeeLoginConfig = [
   },
 ];
 
+const adminLoginConfig = [
+  {
+    id: "admin_username",
+    name: "Username",
+    type: "text",
+    required: true,
+    placeholder: "Enter your username",
+  },
+  {
+    id: "admin_password",
+    name: "Password",
+    type: "password",
+    required: true,
+    placeholder: "Enter your password",
+  },
+  {
+    id: "admin_security_key",
+    name: "Password",
+    type: "password",
+    required: true,
+    placeholder: "Enter your Security key",
+  },
+];
+
 const registerFieldConfigs = [
   {
     name: "username",
@@ -107,4 +131,9 @@ const registerFieldConfigs = [
   },
 ];
 
-export { patientLoginConfig, employeeLoginConfig, registerFieldConfigs as fieldConfigs };
+export {
+  patientLoginConfig,
+  employeeLoginConfig,
+  registerFieldConfigs as fieldConfigs,
+  adminLoginConfig,
+};
