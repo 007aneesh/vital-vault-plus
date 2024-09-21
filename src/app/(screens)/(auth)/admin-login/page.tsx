@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -12,81 +13,49 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import { useForm } from "react-hook-form";
 import { useAuthStore } from "@/store/useAuthStore";
-import { PatientFormFields, EmployeeFormFields } from "@/@types/auth";
-import { patientLoginConfig, employeeLoginConfig } from "@/data/fromData";
-import { useRouter } from "next/navigation";
+import { adminLoginConfig } from "@/data/fromData";
 
-const patientSchema = z.object({
-  aadhar_card: z
-    .string()
-    .length(12, "Aadhar must be 12 digits")
-    .transform((val) => parseInt(val, 10)),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
-
-const employeeSchema = z.object({
-  hospital_id: z.string().min(1, "Hospital ID is required"),
-  employee_id: z.string().min(1, "Employee ID is required"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+const schema = z.object({
+  admin_username: z.string().min(1, "Username is required"),
+  admin_password: z.string().min(1, "Password is required"),
+  admin_security_key: z.string().min(8, "Security Key is required"),
 });
 
 const LoginPage = () => {
-  const router = useRouter();
   const login = useAuthStore((state) => state.login);
-  const loginMode = useAuthStore((state) => state.loginMode);
   const setLoginMode = useAuthStore((state) => state.setLoginMode);
-
-  const schema = loginMode === "patient" ? patientSchema : employeeSchema;
-  const formConfig =
-    loginMode === "patient" ? patientLoginConfig : employeeLoginConfig;
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   });
+  const router = useRouter();
 
   function onSubmit(values: z.infer<typeof schema>) {
-    if (loginMode === "employee") {
-      login(values, loginMode);
-      router.push("/employee");
-    } else {
-      login(values, loginMode);
-      router.push("/user");
-    }
+    setLoginMode("admin");
+    login(values.admin_username, "admin");
+    router.push("/admin");
     console.log(values);
   }
-
-  const handleToggleLoginMode = () => {
-    setLoginMode(loginMode === "patient" ? "employee" : "patient");
-  };
 
   const render_form = () => {
     return (
       <div className="flex flex-col items-center w-full justify-center">
         <Form {...form}>
-          <div className="flex items-center w-full justify-around mb-7">
-            <h4>Employee Mode</h4>
-            <FormControl>
-              <Switch
-                checked={loginMode === "patient"}
-                onCheckedChange={handleToggleLoginMode}
-              />
-            </FormControl>
-            <h4>Patient Mode</h4>
-          </div>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-5 flex flex-col justify-center w-full"
           >
-            {formConfig.map((fieldConfig) => (
+            {adminLoginConfig.map((fieldConfig) => (
               <FormField
                 key={fieldConfig.id}
                 control={form.control}
                 name={
-                  fieldConfig.id as keyof (PatientFormFields &
-                    EmployeeFormFields)
+                  fieldConfig.id as
+                    | "admin_username"
+                    | "admin_password"
+                    | "admin_security_key"
                 }
                 render={({ field }) => (
                   <FormItem>
@@ -120,7 +89,7 @@ const LoginPage = () => {
   return (
     <div className="w-full flex flex-col items-center justify-center ">
       <div className="py-8 flex flex-col items-center">
-        <h1 className="heading">Welcome back</h1>
+        <h1 className="heading">Hello, Admin</h1>
         <p className="sub-heading">Please enter your details to sign in</p>
       </div>
       <div className="w-full md:max-w-sm">{render_form()}</div>

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import ProtectedAdminRoute from "@/components/protected/protected-admin";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
   IconArrowLeft,
@@ -11,7 +12,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import LogoImg from "@/app/favicon.ico"
+import LogoImg from "@/app/favicon.ico";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const links = [
@@ -25,23 +26,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     {
       label: "Employee Access",
       href: "/admin/employee",
-      icon: (
-        <IconUserBolt className="text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
+      icon: <IconUserBolt className="text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
       label: "Patient List",
       href: "/admin/patient-list",
-      icon: (
-        <IconUserBolt className="text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
+      icon: <IconUserBolt className="text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
       label: "Settings",
       href: "/admin/settings",
-      icon: (
-        <IconSettings className="text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
+      icon: <IconSettings className="text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
       label: "Logout",
@@ -52,48 +47,52 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     },
   ];
   const [open, setOpen] = useState(false);
+
   return (
-    <div
-      className={cn(
-        "flex flex-col md:flex-row w-full mx-auto overflow-hidden",
-        "h-screen"
-      )}
-    >
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10 black-gradient">
-          <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-            {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
-              ))}
+    <ProtectedAdminRoute>
+      <div
+        className={cn(
+          "flex flex-col md:flex-row w-full mx-auto overflow-hidden",
+          "h-screen"
+        )}
+      >
+        <Sidebar open={open} setOpen={setOpen}>
+          <SidebarBody className="justify-between gap-10 black-gradient">
+            <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+              {open ? <Logo /> : <LogoIcon />}
+              <div className="mt-8 flex flex-col gap-2">
+                {links.map((link, idx) => (
+                  <SidebarLink key={idx} link={link} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div>
-            <SidebarLink
-              link={{
-                label: "Vital Vault",
-                href: "/admin",
-                icon: (
-                  <Image
-                    src={LogoImg}
-                    className="h-7 w-7 flex-shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
-                ),
-              }}
-            />
-          </div>
-        </SidebarBody>
-      </Sidebar>
-      <div className="flex-1 overflow-y-auto scrollbar-hidden">
-        {children}
+            <div>
+              <SidebarLink
+                link={{
+                  label: "Vital Vault",
+                  href: "/admin",
+                  icon: (
+                    <Image
+                      src={LogoImg}
+                      className="h-7 w-7 flex-shrink-0 rounded-full"
+                      width={50}
+                      height={50}
+                      alt="Avatar"
+                    />
+                  ),
+                }}
+              />
+            </div>
+          </SidebarBody>
+        </Sidebar>
+        <div className="flex-1 overflow-y-auto scrollbar-hidden">
+          {children}
+        </div>
       </div>
-    </div>
+    </ProtectedAdminRoute>
   );
 }
+
 export const Logo = () => {
   return (
     <Link
@@ -111,6 +110,7 @@ export const Logo = () => {
     </Link>
   );
 };
+
 export const LogoIcon = () => {
   return (
     <Link
