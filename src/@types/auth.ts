@@ -10,10 +10,23 @@ type EmployeeFormFields = {
   password: string;
 };
 
+// register for types
+
+type FormFieldNames =
+  | "username"
+  | "organisation_email"
+  | "contact"
+  | "password"
+  | "confirm_password"
+  | "organisation_name"
+  | "registration_no"
+  | "address"
+  | "city"
+  | "state"
+  | "pin_code"
+  | "plan";
+
 
 // exports
 
-export type {
-    PatientFormFields,
-    EmployeeFormFields
-}
+export type { PatientFormFields, EmployeeFormFields, FormFieldNames };

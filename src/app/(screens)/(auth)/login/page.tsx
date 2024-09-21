@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { useForm } from "react-hook-form";
 import { useAuthStore } from "@/store/useAuthStore";
 import { PatientFormFields, EmployeeFormFields } from "@/@types/auth";
@@ -32,7 +33,10 @@ const employeeSchema = z.object({
 });
 
 const LoginPage = () => {
-  const { loginMode } = useAuthStore() as { loginMode: "patient" | "employee" };
+  const { loginMode, setLoginMode } = useAuthStore() as {
+    loginMode: "patient" | "employee";
+    setLoginMode: (mode: "patient" | "employee") => void;
+  };
   const schema = loginMode === "patient" ? patientSchema : employeeSchema;
   const formConfig =
     loginMode === "patient" ? patientLoginConfig : employeeLoginConfig;
@@ -45,51 +49,72 @@ const LoginPage = () => {
     console.log(values);
   }
 
+  const handleToggleLoginMode = () => {
+    setLoginMode(loginMode === "patient" ? "employee" : "patient");
+  };
+
   const render_form = () => {
     return (
-      <div className="flex items-center w-full justify-center">
-
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 flex flex-col justify-center w-full">
-          {formConfig.map((fieldConfig) => (
-            <FormField
-              key={fieldConfig.id}
-              control={form.control}
-              name={
-                fieldConfig.id as keyof (PatientFormFields & EmployeeFormFields)
-              }
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="">{fieldConfig.name}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type={fieldConfig.type}
-                      className="bg-gray-200"
-                      placeholder={fieldConfig.placeholder}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          <Button type="submit" variant={"secondary"} className="border-border">
-            Submit
-          </Button>
-        </form>
-      </Form>
+      <div className="flex flex-col items-center w-full justify-center">
+        <Form {...form}>
+          <div className="flex items-center w-full justify-around mb-7">
+            <h4>Employee Mode</h4>
+            <FormControl>
+              <Switch
+                checked={loginMode === "patient"}
+                onCheckedChange={handleToggleLoginMode}
+              />
+            </FormControl>
+            <h4>Patient Mode</h4>
+          </div>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-5 flex flex-col justify-center w-full"
+          >
+            {formConfig.map((fieldConfig) => (
+              <FormField
+                key={fieldConfig.id}
+                control={form.control}
+                name={
+                  fieldConfig.id as keyof (PatientFormFields &
+                    EmployeeFormFields)
+                }
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="">{fieldConfig.name}</FormLabel>
+                    <FormControl>
+                      <Input
+                        type={fieldConfig.type}
+                        className="bg-gray-200"
+                        placeholder={fieldConfig.placeholder}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            ))}
+            <Button
+              type="submit"
+              variant={"secondary"}
+              className="border-border"
+            >
+              Submit
+            </Button>
+          </form>
+        </Form>
       </div>
     );
   };
 
   return (
-    <div className="w-full flex-col items-center justify-center md:max-w-sm">
+    <div className="w-full flex flex-col items-center justify-center ">
       <div className="py-8 flex flex-col items-center">
         <h1 className="heading">Welcome back</h1>
         <p className="sub-heading">Please enter your details to sign in</p>
       </div>
-      {render_form()}
+      <div className="w-full md:max-w-sm">{render_form()}</div>
     </div>
   );
 };
