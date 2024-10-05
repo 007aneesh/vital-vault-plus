@@ -18,6 +18,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { PatientFormFields, EmployeeFormFields } from "@/@types/auth";
 import { patientLoginConfig, employeeLoginConfig } from "@/data/fromData";
 import { useRouter } from "next/navigation";
+import { login } from "@/actions/auth";
 
 const patientSchema = z.object({
   aadhar_card: z
@@ -28,14 +29,13 @@ const patientSchema = z.object({
 });
 
 const employeeSchema = z.object({
-  hospital_id: z.string().min(1, "Hospital ID is required"),
-  employee_id: z.string().min(1, "Employee ID is required"),
+  username: z.string().min(1, "Hospital ID is required"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 const LoginPage = () => {
   const router = useRouter();
-  const login = useAuthStore((state) => state.login);
+  const loginModeChange = useAuthStore((state) => state.login);
   const loginMode = useAuthStore((state) => state.loginMode);
   const setLoginMode = useAuthStore((state) => state.setLoginMode);
 
@@ -49,10 +49,14 @@ const LoginPage = () => {
 
   function onSubmit(values: z.infer<typeof schema>) {
     if (loginMode === "employee") {
-      login(values, loginMode);
-      router.push("/employee");
+      const response = login(values, loginMode)
+      loginModeChange(values, "employee");
+      console.log(response)
+      router.push("/eadmin");
     } else {
-      login(values, loginMode);
+      const response = login(values, "patient");
+      loginModeChange(values, loginMode);
+      console.log(response)
       router.push("/user");
     }
     console.log(values);

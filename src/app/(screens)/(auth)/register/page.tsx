@@ -7,6 +7,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import React from "react";
 import { z } from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
@@ -14,30 +15,30 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { FormFieldNames } from "@/@types/auth";
 import { fieldConfigs } from "@/data/fromData";
+import { registerUser } from "@/actions/auth";
 
 const getDefaultValues = () => ({
-  username: "",
-  organisation_email: "",
-  contact: "",
+  userName: "",
+  email: "",
+  contactNo: "",
   password: "",
   confirm_password: "",
-  organisation_name: "",
-  registration_no: "",
+  orgName: "",
   address: "",
   city: "",
   state: "",
-  pin_code: "",
-  plan: "",
+  pinCode: "",
+  planSelected: "",
 });
 
 const schema = z
   .object({
-    username: z.string().min(1, "Username is required"),
-    organisation_email: z
+    userName: z.string().min(1, "Username is required"),
+    email: z
       .string()
       .email("Invalid email")
       .min(1, "Organisation email is required"),
-    contact: z.string().min(1, "Contact number is required"),
+    contactNo: z.string().min(1, "Contact number is required"),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -46,13 +47,12 @@ const schema = z
       .string()
       .min(8, "Password must be at least 8 characters")
       .min(1, "Confirm password is required"),
-    organisation_name: z.string().min(1, "Organisation name is required"),
-    registration_no: z.string().min(1, "Registration number is required"),
+    orgName: z.string().min(1, "Organisation name is required"),
     address: z.string().min(1, "Address is required"),
     city: z.string().min(1, "City is required"),
     state: z.string().min(1, "State is required"),
-    pin_code: z.string().min(1, "Pin code is required"),
-    plan: z.string().min(1, "Plan is required"),
+    pinCode: z.string().min(1, "Pin code is required"),
+    planSelected: z.string().min(1, "Plan is required"),
   })
   .refine((data) => data.password === data.confirm_password, {
     message: "Passwords must match",
@@ -65,9 +65,15 @@ const RegisterPage = () => {
     defaultValues: getDefaultValues(),
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (payload: any) => {
     try {
-      console.log("Form submitted successfully:", data);
+      const data = {
+        ...payload,
+        contactNo: Number(payload.contactNo),
+        pinCode: Number(payload.pinCode),
+      };
+      const response = registerUser(data);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }

@@ -5,26 +5,24 @@ type PatientFormFields = {
 };
 
 type EmployeeFormFields = {
-  hospital_id: string;
-  employee_id: string;
+  username: string;
   password: string;
 };
 
-// register for types
+// register form types
 
 type FormFieldNames =
-  | "username"
-  | "organisation_email"
-  | "contact"
+  | "userName"
+  | "email"
+  | "contactNo"
   | "password"
   | "confirm_password"
-  | "organisation_name"
-  | "registration_no"
+  | "orgName"
   | "address"
   | "city"
   | "state"
-  | "pin_code"
-  | "plan";
+  | "pinCode"
+  | "planSelected";
 
 
 // exports

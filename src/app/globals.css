@@ -87,12 +87,12 @@
   .sub-heading {
     @apply font-medium text-base text-center text-gray-500;
   }
-
+  
   .scrollbar-hidden {
     scrollbar-width: none;
   }
 
   .scrollbar-hidden::-webkit-scrollbar {
-    display: none; 
+    display: none;
   }
 }
