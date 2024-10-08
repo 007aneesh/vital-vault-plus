@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosResponse } from "axios";
-import Router from "next/router";
 
 const BASE_URL = String(process.env.NEXT_PUBLIC_BASE_URL);
-const COOKIEAUTHKEY = "refreshToken";
+// const COOKIEAUTHKEY = "refreshToken";
 
 const authClient = axios.create({
   baseURL: `${BASE_URL}/auth`,
@@ -19,9 +18,9 @@ const axiosWithToken = axios.create({
   },
 });
 
-export async function delete_cookie(name: string) {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-}
+// export async function delete_cookie(name: string) {
+//   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+// }
 
 authClient.interceptors.response.use(
   (response) => response,
@@ -30,8 +29,7 @@ authClient.interceptors.response.use(
       error.response &&
       (error.response.status === 401 || error.response.status === 403)
     ) {
-      delete_cookie(COOKIEAUTHKEY);
-      Router.push("/login");
+      // Router.push("/login");
     }
     return Promise.reject(error);
   }
@@ -66,7 +64,7 @@ axiosWithToken.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosWithToken(originalRequest);
       } catch (refreshError) {
-        Router.push("/login");
+        // Router.push("/login");
         return Promise.reject(refreshError);
       }
     }
@@ -78,28 +76,33 @@ export async function login(
   data: any,
   authMode: "employee" | "patient"
 ): Promise<AxiosResponse> {
-  const response = await authClient.post(
-    authMode === "employee" ? `/employee-login-v1` : `/user-login-v1`,
-    JSON.stringify(data),
-    {}
-  );
-  return response.data;
+  try {
+    const response = await authClient.post(
+      authMode === "employee" ? `/employee-login-v1` : `/user-login-v1`,
+      data,
+      {}
+    );
+    return response;
+  } catch (error) {
+    return error as AxiosResponse<any, any>;
+  }
 }
 
-export async function adminLogin(
-  data: any,
-): Promise<AxiosResponse> {
-  const response = await authClient.post(
-    `/admin-login-v1`,
-    JSON.stringify(data),
-    {}
-  );
-  return response.data;
+export async function adminLogin(data: any): Promise<AxiosResponse> {
+  try {
+    const response = await authClient.post(
+      `/admin-login-v1`,
+      data,
+      {}
+    );
+    return response;
+  } catch (error) {
+    return error as AxiosResponse<any, any>;
+  }
 }
-
 
 export async function registerUser(data: any): Promise<AxiosResponse> {
-  const response = await authClient.post("/register", JSON.stringify(data), {
+  const response = await authClient.post("/register", data, {
     withCredentials: true,
   });
   localStorage.setItem("accessToken", response.data.accessToken);

@@ -16,11 +16,12 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useAuthStore } from "@/store/useAuthStore";
 import { adminLoginConfig } from "@/data/fromData";
+import { adminLogin } from "@/actions/auth";
 
 const schema = z.object({
-  admin_username: z.string().min(1, "Username is required"),
-  admin_password: z.string().min(1, "Password is required"),
-  admin_security_key: z.string().min(8, "Security Key is required"),
+  userName: z.string().min(1, "Username is required"),
+  password: z.string().min(1, "Password is required"),
+  // admin_security_key: z.string().min(8, "Security Key is required"),
 });
 
 const LoginPage = () => {
@@ -32,11 +33,12 @@ const LoginPage = () => {
   });
   const router = useRouter();
 
-  function onSubmit(values: z.infer<typeof schema>) {
+  async function onSubmit(payload: z.infer<typeof schema>) {
     setLoginMode("admin");
-    login(values.admin_username, "admin");
-    router.push("/admin");
-    console.log(values);
+    login(payload.userName, "admin");
+    const response = await adminLogin(payload);
+    if(response.status === 200) router.push("/admin");
+    else console.log("Invalid Credentials")
   }
 
   const render_form = () => {
@@ -52,10 +54,8 @@ const LoginPage = () => {
                 key={fieldConfig.id}
                 control={form.control}
                 name={
-                  fieldConfig.id as
-                    | "admin_username"
-                    | "admin_password"
-                    | "admin_security_key"
+                  fieldConfig.id as "userName" | "password"
+                  // | "admin_security_key"
                 }
                 render={({ field }) => (
                   <FormItem>

@@ -6,8 +6,10 @@ import { IconMenu2 } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./button";
+import { useRouter } from "next/navigation";
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const router = useRouter();
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -35,27 +37,26 @@ const Navbar = () => {
             {true ? (
               false ? (
                 <Button
-                  onClick={() => {}}
+                  onClick={() => router.push("/login")}
                   className="border-[#3555ac] rounded-md lg:text-base font-medium border-2 px-3 py-1 hover: bg-[#3555ac] transition transform ease-in-out duration-500 text-white hover:bg-transparent hover:text-[#3555ac]"
                 >
                   Sign In
                 </Button>
               ) : (
                 <Button
-                  onClick={() => {}}
+                  onClick={() => router.push("/login")}
                   className="border-[#3555ac] rounded-md lg:text-base font-medium border-2 px-3 py-1 hover: bg-[#3555ac] transition transform ease-in-out duration-500 text-white hover:bg-transparent hover:text-[#3555ac]"
                 >
                   Sign In
                 </Button>
               )
             ) : (
-              <h1
-              //   to="/signin"
+              <Button
+                onClick={() => router.push("/login")}
+                className="border-[#3555ac] rounded-md lg:text-base font-medium border-2 px-3 py-1 hover: bg-[#3555ac] transition transform ease-in-out duration-500 text-white hover:bg-transparent hover:text-[#3555ac]"
               >
-                <Button className="border-[#3555ac] rounded-md lg:text-base font-medium border-2 px-3 py-1 hover: bg-[#3555ac] transition transform ease-in-out duration-500 text-white hover:bg-transparent hover:text-[#3555ac]">
-                  Sign In
-                </Button>
-              </h1>
+                Sign In
+              </Button>
             )}
           </div>
           <div className="flex items-center relative">

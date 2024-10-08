@@ -47,17 +47,19 @@ const LoginPage = () => {
     resolver: zodResolver(schema),
   });
 
-  function onSubmit(values: z.infer<typeof schema>) {
+  async function onSubmit(values: z.infer<typeof schema>) {
     if (loginMode === "employee") {
-      const response = login(values, loginMode)
+      const response = await login(values, loginMode)
       loginModeChange(values, "employee");
       console.log(response)
-      router.push("/eadmin");
+      if (response.status === 200) router.push("/eadmin");
+      else console.log("Invalid Credentials");
     } else {
-      const response = login(values, "patient");
+      const response = await login(values, "patient");
       loginModeChange(values, loginMode);
       console.log(response)
-      router.push("/user");
+      if (response.status === 200) router.push("/user");
+      else console.log("Invalid Credentials");
     }
     console.log(values);
   }

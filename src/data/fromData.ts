@@ -34,26 +34,26 @@ const employeeLoginConfig = [
 
 const adminLoginConfig = [
   {
-    id: "admin_username",
+    id: "userName",
     name: "Username",
     type: "text",
     required: true,
     placeholder: "Enter your username",
   },
   {
-    id: "admin_password",
+    id: "password",
     name: "Password",
     type: "password",
     required: true,
     placeholder: "Enter your password",
   },
-  {
-    id: "admin_security_key",
-    name: "Security Key",
-    type: "password",
-    required: true,
-    placeholder: "Enter your Security key",
-  },
+  // {
+  //   id: "admin_security_key",
+  //   name: "Security Key",
+  //   type: "password",
+  //   required: true,
+  //   placeholder: "Enter your Security key",
+  // },
 ];
 
 const registerFieldConfigs = [
@@ -77,6 +77,12 @@ const registerFieldConfigs = [
     type: "number",
   },
   {
+    name: "orgName",
+    label: "Organisation Name",
+    placeholder: "e.g. My Organisation",
+    type: "text",
+  },
+  {
     name: "password",
     label: "Password",
     placeholder: "Enter your password",
@@ -89,12 +95,6 @@ const registerFieldConfigs = [
     type: "password",
   },
 
-  {
-    name: "orgName",
-    label: "Organisation Name",
-    placeholder: "e.g. My Organisation",
-    type: "text",
-  },
   {
     name: "address",
     label: "Address",

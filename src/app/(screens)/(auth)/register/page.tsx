@@ -33,25 +33,20 @@ const getDefaultValues = () => ({
 
 const schema = z
   .object({
-    userName: z.string().min(1, "Username is required"),
-    email: z
-      .string()
-      .email("Invalid email")
-      .min(1, "Organisation email is required"),
-    contactNo: z.string().min(1, "Contact number is required"),
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .min(1, "Password is required"),
+    userName: z.string().min(5, "Username is required"),
+    email: z.string().email("Invalid email"),
+    contactNo: z.string().min(1000000000, "Contact number is required"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
     confirm_password: z
       .string()
-      .min(8, "Password must be at least 8 characters")
-      .min(1, "Confirm password is required"),
-    orgName: z.string().min(1, "Organisation name is required"),
-    address: z.string().min(1, "Address is required"),
-    city: z.string().min(1, "City is required"),
-    state: z.string().min(1, "State is required"),
-    pinCode: z.string().min(1, "Pin code is required"),
+      .min(6, "Password must be at least 6 characters"),
+    orgName: z
+      .string()
+      .min(1, "Organization name required"),
+    address: z.string().min(5, "Address is required"),
+    city: z.string().min(2, "City is required"),
+    state: z.string().min(2, "State is required"),
+    pinCode: z.string().min(100000, "Pin code is required"),
     planSelected: z.string().min(1, "Plan is required"),
   })
   .refine((data) => data.password === data.confirm_password, {
