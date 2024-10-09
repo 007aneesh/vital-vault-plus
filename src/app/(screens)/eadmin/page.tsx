@@ -62,7 +62,6 @@ export default function Page() {
         <div className="flex items-center justify-center">
         
             <button
-              onClick={()=>{}}
               className="p-5 bg-[#662890]/80 text-white w-1/3  py-2 text-lg rounded-lg"
             >
               Add
