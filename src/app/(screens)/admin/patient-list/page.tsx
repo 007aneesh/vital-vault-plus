@@ -1,3 +1,4 @@
+"use client";
 // import { PatientList } from "@/@types/tableData";
 
 import { columns } from "./columns";
@@ -9,7 +10,7 @@ import { makeData, Person } from "./makeData";
 
 export default async function Page() {
 
-  const rerender = React.useReducer(() => ({}), {})[1]
+  const rerender = useReducer(() => ({}), {});
 
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
