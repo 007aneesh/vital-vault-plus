@@ -1,12 +1,9 @@
 "use client";
-
-import Navbar from "@/components/ui/navbar";
 import Link from "next/link";
 
 export default function Page() {
   return (
     <div>
-      <Navbar />
       <div
         data-aos="zoom-in-right"
         className="flex flex-col justify-center p-8 pt-24 lg:px-28 items-center gap-y-5 "
