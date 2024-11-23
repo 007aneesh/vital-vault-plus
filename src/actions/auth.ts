@@ -12,11 +12,11 @@ const authClient = axios.create({
 });
 
 const axiosWithToken = axios.create({
-  baseURL: `${BASE_URL}/v1`,
+  baseURL: `${BASE_URL}/adm/v1`,
   headers: {
-    "Content-type": "application/json",
+    'Content-type': 'application/json',
   },
-});
+})
 
 // export async function delete_cookie(name: string) {
 //   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -57,14 +57,15 @@ axiosWithToken.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        const refreshTokenResponse = await authClient.post("/refresh-token");
-        const newAccessToken = refreshTokenResponse.data.accessToken;
+        const refreshTokenResponse = await refreshAccessToken()
+        const newAccessToken = refreshTokenResponse.data.accessToken
 
         localStorage.setItem("accessToken", newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosWithToken(originalRequest);
       } catch (refreshError) {
         // Router.push("/login");
+        localStorage.removeItem('accessToken')
         return Promise.reject(refreshError);
       }
     }
@@ -101,12 +102,21 @@ export async function adminLogin(data: any): Promise<AxiosResponse> {
   }
 }
 
-export async function registerUser(data: any): Promise<AxiosResponse> {
-  const response = await authClient.post("/register", data, {
-    withCredentials: true,
-  });
-  localStorage.setItem("accessToken", response.data.accessToken);
-  return response.data.message;
+export async function registerUser(data: any): Promise<any> {
+   try {
+     const response = await authClient.post('/register', data, {
+       withCredentials: true,
+     })
+
+     localStorage.setItem('accessToken', response.data.accessToken)
+
+     return {
+       message: response.data.message,
+       user: response.data.user,
+     }
+   } catch (error) {
+     throw new Error('Registration failed')
+   }
 }
 
 export async function logout(): Promise<AxiosResponse> {

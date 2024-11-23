@@ -1,13 +1,12 @@
 'use client'
 
-import { Person } from '@/@types/tableData'
 import { ColumnDef } from '@tanstack/react-table'
 import React from 'react'
 
-export const columns: ColumnDef<Person, any>[] = [
+export const columns: ColumnDef<any, any>[] = [
   {
-    accessorKey: 'aadhar',
-    id: 'aadhar',
+    accessorKey: 'name',
+    id: 'name',
     header: () => 'Aadhar Number',
     meta: {
       filterVariant: 'range',

@@ -15,23 +15,6 @@ const patientLoginConfig = [
   },
 ];
 
-const employeeLoginConfig = [
-  {
-    id: "username",
-    name: "Username",
-    type: "text",
-    required: true,
-    placeholder: "Enter your username",
-  },
-  {
-    id: "password",
-    name: "Password",
-    type: "password",
-    required: true,
-    placeholder: "Enter your password",
-  },
-];
-
 const adminLoginConfig = [
   {
     id: "userName",
@@ -74,7 +57,7 @@ const registerFieldConfigs = [
     name: "contactNo",
     label: "Contact Number",
     placeholder: "e.g. +1 234 567 890",
-    type: "number",
+    type: "text",
   },
   {
     name: "orgName",
@@ -107,7 +90,7 @@ const registerFieldConfigs = [
     name: "pinCode",
     label: "Pin Code",
     placeholder: "e.g. 10001",
-    type: "number",
+    type: "text",
   },
   {
     name: "planSelected",
@@ -117,9 +100,60 @@ const registerFieldConfigs = [
   },
 ];
 
+const contactConfig = [
+  {
+    name: "fullName",
+    label: "Full Name",
+    placeholder: "e.g. John Doe",
+    type: "text",
+  },
+  {
+    name: "email",
+    label: "Email",
+    placeholder: "e.g. johndoe@gmail.com",
+    type: "email",
+  },
+  {
+    name: "phoneNumber",
+    label: "Phone Number",
+    placeholder: "e.g. 9999888877",
+    type: "number",
+  },
+  {
+    name: "clinicHospitalOrgName",
+    label: "Clinic/ Hospital/ Org Name",
+    placeholder: "e.g. Sun Pharma",
+    type: "text",
+  },
+  {
+    name: "city",
+    label: "City",
+    placeholder: "e.g. Indore",
+    type: "text",
+  },
+  {
+    name : "countryRegion",
+    label: "Country/ Region",
+    placeholder: "e.g. India",
+    type: "text",
+  },
+  {
+    name: "preferredTime",
+    label: "Preferred time to call Back",
+    placeholder: "e.g. 11:00 AM",
+    type: "datetime",
+  },
+  {
+    name: "message",
+    label: "Message",
+    placeholder: "Write Something here...",
+    type: "text",
+  },
+];
+
 export {
   patientLoginConfig,
-  employeeLoginConfig,
-  registerFieldConfigs as fieldConfigs,
+  registerFieldConfigs,
   adminLoginConfig,
+  contactConfig
 };

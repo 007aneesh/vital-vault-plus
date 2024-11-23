@@ -1,5 +1,7 @@
 export default function Page() {
-    return (
-        <div>Employee Access</div>
-    );
+  return (
+    <div>
+        Employee Access
+    </div>
+  )
 }

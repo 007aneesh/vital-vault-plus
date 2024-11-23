@@ -1,48 +1,25 @@
-import { faker } from "@faker-js/faker";
-
-export type Person = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  visits: number;
-  progress: number;
-  status: "relationship" | "complicated" | "single";
-  subRows?: Person[];
-};
+import { Person } from '@/@types/tableData'
+import { faker } from '@faker-js/faker'
 
 const range = (len: number) => {
-  const arr: number[] = [];
-  for (let i = 0; i < len; i++) {
-    arr.push(i);
-  }
-  return arr;
-};
+  return Array.from({ length: len }, (_, i) => i)
+}
 
 const newPerson = (): Person => {
   return {
+    id: faker.number.int({ min: 1000000000000, max: 9999999999999 }),
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
-    age: faker.number.int(40),
-    visits: faker.number.int(1000),
-    progress: faker.number.int(100),
-    status: faker.helpers.shuffle<Person["status"]>([
-      "relationship",
-      "complicated",
-      "single",
-    ])[0]!,
-  };
-};
+    aadhar: faker.number.int({ min: 1000000000000, max: 9999999999999 }),
+    age: faker.number.int({ min: 18, max: 100 }),
+    contact: faker.number.int({ min: 1000000000, max: 9999999999 }),
+    address: faker.location.streetAddress(),
+    gender: faker.person.sexType(),
+    lastVisit: faker.date.past().toLocaleDateString(),
+    status: faker.helpers.arrayElement(['Active', 'Discharged', 'Deceased']),
+  }
+}
 
-export function makeData(...lens: number[]) {
-  const makeDataLevel = (depth = 0): Person[] => {
-    const len = lens[depth]!;
-    return range(len).map((d): Person => {
-      return {
-        ...newPerson(),
-        subRows: lens[depth + 1] ? makeDataLevel(depth + 1) : undefined,
-      };
-    });
-  };
-
-  return makeDataLevel();
+export function makeData(len: number): Person[] {
+  return range(len).map(() => newPerson())
 }
