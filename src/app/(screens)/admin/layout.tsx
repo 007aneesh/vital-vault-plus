@@ -99,7 +99,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </SidebarBody>
         </Sidebar>
-        <div className='flex-1 overflow-y-auto scrollbar-hidden bg-dashboard-background px-10 py-8'>
+        <div className='flex-1 overflow-y-auto scrollbar-hidden bg-dashboard-background px-6 py-8'>
           {children}
         </div>
       </div>

@@ -54,7 +54,7 @@ export default function Page() {
 
   return (
     <div>
-      <div className='flex flex-col md:flex-row justify-between pb-10 items-start'>
+      <div className='flex flex-col gap-5 md:flex-row justify-between pb-10 items-start'>
         <Breadcrumb>
           <BreadcrumbList>
             {_.map(breadcrumb_list, (item, index) => {
@@ -74,8 +74,8 @@ export default function Page() {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <Drawer>
-          <DrawerTrigger variant='secondary' className='flex flex-end'>
+        <Drawer >
+          <DrawerTrigger variant='secondary' className='w-full md:w-auto'>
             Add new patient
           </DrawerTrigger>
           <DrawerContent>
