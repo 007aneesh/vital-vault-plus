@@ -1,22 +1,29 @@
+'use client'
+
+import { DataTable } from '@/components/ui/data-table'
 import {
-  patient_profile_config,
-  timeline_config,
   medical_history_config,
   medications_config,
 } from '@/configs/PatientProfileConfig'
 import _ from 'lodash'
 
 import Image from 'next/image'
+import { columns } from './columns'
+import { useEffect, useState } from 'react'
+import { get_patient_data } from '@/lib/patientrender'
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params
-  console.log('patient_id: ', id)
 
-  const handle_render_patient_profile = ({
-    data,
-  }: {
-    data: typeof patient_profile_config
-  }) => {
+  const [data, setData] = useState<any>([])
+
+  useEffect(() => {
+    const response = get_patient_data()
+    setData(response)
+  }, [])
+  console.log('patient_data:', id, data)
+
+  const handle_render_patient_profile = (payload: any) => {
     return (
       <div className='flex flex-col md:flex-row items-center md:items-start gap-6 border p-4 rounded-lg mb-6 shadow-sm bg-white'>
         <Image
@@ -25,29 +32,35 @@ const Page = ({ params }: { params: { id: string } }) => {
           className='w-28 h-28 rounded-full object-cover border'
         />
         <div>
-          <h2 className='text-2xl font-bold'>{data.name}</h2>
+          <h2 className='text-2xl font-bold'>
+            {`${payload?.first_name} ${payload?.last_name}`}
+          </h2>
           <p className='text-gray-600'>
-            {data.gender} | {data.location} | {data.occupation}
+            {payload?.gender} | {payload?.address?.city} | {payload?.occupation}
           </p>
-          <p className='text-gray-600'>Date of Birth: {data.dob}</p>
+          <p className='text-gray-600'>
+            Date of Birth: {payload?.date_of_birth}
+          </p>
           <div className='grid grid-cols-2 gap-4 mt-4'>
             <div>
-              <strong>BMI:</strong> {data.bmi} ({data.bmi_change})
+              <strong>Aadhar Number:</strong> {payload?.aadhar_number}
             </div>
             <div>
-              <strong>Weight:</strong> {data.weight}kg ({data.weight_change})
+              <strong>Email:</strong> {payload?.email}
             </div>
             <div>
-              <strong>Height:</strong> {data.height}cm
+              <strong>Weight:</strong> {payload?.weight}kg
             </div>
             <div>
-              <strong>Blood Pressure:</strong> {data.blood_pressure} (
-              {data.bp_change})
+              <strong>Height:</strong> {payload?.height}cm
+            </div>
+            <div>
+              <strong>Blood Group:</strong> {payload?.blood_group}
             </div>
           </div>
           <div className='mt-2'>
             <strong>Habits:</strong>{' '}
-            {_.map(data?.habits, (habit, index) => (
+            {_.map(payload?.habits, (habit, index) => (
               <span
                 key={index}
                 className='inline-block bg-gray-200 text-gray-800 text-sm rounded-full px-3 py-1 mr-2'
@@ -61,18 +74,21 @@ const Page = ({ params }: { params: { id: string } }) => {
     )
   }
 
-  const handle_render_timeline = ({
-    data,
-  }: {
-    data: typeof timeline_config
-  }) => {
+  const handle_render_timeline = (payload: any) => {
     return (
       <div className='border p-4 rounded-lg mb-6 shadow-sm bg-white'>
-        <h2 className='text-xl font-bold mb-2'>Timeline</h2>
-        {_.map(data, (item, index) => (
-          <div key={index} className='mb-2'>
-            <span className='font-semibold text-gray-700'>{item.date}</span>:{' '}
-            {item.label} (A1C: {item.a1c})
+        <h2 className='text-xl font-bold mb-2'>Visit History</h2>
+        {_.map(payload, (item, index) => (
+          <div key={index} className='flex flex-col w-full'>
+            <div className='font-semibold'>
+              <span className='font-semibold text-gray-700'>
+                {item?.visit_date}
+              </span>
+              : {item?.reason_for_visit}
+            </div>
+            <div className='text-gray-300'>
+              {item?.doctor_name} - {item?.department}
+            </div>
           </div>
         ))}
       </div>
@@ -95,7 +111,8 @@ const Page = ({ params }: { params: { id: string } }) => {
           {data.diabetes_emergencies.join(', ')}
         </div>
         <div>
-          <strong>Surgeries:</strong> {!_.isEmpty(data?.surgeries) ? data.surgeries.join(', ') : '--'}
+          <strong>Surgeries:</strong>{' '}
+          {!_.isEmpty(data?.surgeries) ? data.surgeries.join(', ') : '--'}
         </div>
         <div>
           <strong>Family Diseases:</strong> {data.family_diseases.join(', ')}
@@ -116,23 +133,16 @@ const Page = ({ params }: { params: { id: string } }) => {
     return (
       <div className='border p-4 rounded-lg mb-6 shadow-sm bg-white'>
         <h2 className='text-xl font-bold mb-2'>Medications</h2>
-        {data.map((medication, index) => (
-          <div key={index} className='mb-2'>
-            <span className='font-semibold text-gray-700'>
-              {medication.name}
-            </span>
-            : {medication.status} | Assigned by: {medication.assigned_by}
-          </div>
-        ))}
+        <DataTable columns={columns} data={data} />
       </div>
     )
   }
 
   return (
     <div className='py-5'>
-      {handle_render_patient_profile({ data: patient_profile_config })}
+      {handle_render_patient_profile(data?.personal_info)}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-        {handle_render_timeline({ data: timeline_config })}
+        {handle_render_timeline(data?.visit_history)}
         {handle_render_medical_history({ data: medical_history_config })}
       </div>
       {handle_render_medications({ data: medications_config })}

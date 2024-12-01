@@ -16,6 +16,8 @@ type Person = {
   gender: string
   lastVisit: string
   status: 'Active' | 'Discharged' | 'Deceased'
+  role: any
+  employee_id: any
 }
 
 export type { PatientList, Person }

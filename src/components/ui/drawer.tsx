@@ -64,12 +64,12 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed inset-x-0 top-0 z-50 h-[100dvh] mt-24 px-4 flex md:h-auto md:max-h-[70vh] flex-col md:rounded-t-lg border bg-background',
+        'fixed inset-x-0 top-0 z-50 h-[100dvh] md:mt-24 p-4 flex md:h-full md:max-h-[85vh] flex-col md:rounded-t-lg border bg-dashboard-background',
         className,
       )}
       {...props}
     >
-      <div className='flex flex-col flex-grow overflow-y-auto px-4'>{children}</div>
+      <div className='flex flex-col overflow-y-auto px-4 '>{children}</div>
     </DrawerPrimitive.Content>
   </DrawerPortal>
 ))
@@ -81,7 +81,7 @@ const DrawerHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      'sticky top-0 z-10 bg-background grid gap-1.5 pb-4 mb-2 text-center sm:text-left',
+      'sticky top-0 z-10 bg-dashboard-background grid gap-1.5 pb-4 mb-2 text-center sm:text-left',
       className,
     )}
     {...props}
@@ -95,7 +95,7 @@ const DrawerFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      'sticky bottom-0 z-10 bg-background flex flex-col gap-2 p-4',
+      'sticky bottom-0 z-10 bg-dashboard-background flex flex-col gap-2 p-4',
       className,
     )}
     {...props}

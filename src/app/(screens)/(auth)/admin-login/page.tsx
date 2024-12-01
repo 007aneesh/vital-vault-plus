@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
-import { useAuthStore } from '@/store/useAuthStore'
 import { adminLoginConfig } from '@/data/FomData'
 import { adminLogin } from '@/actions/auth'
 
@@ -25,8 +24,6 @@ const schema = z.object({
 })
 
 const LoginPage = () => {
-  const login = useAuthStore((state) => state.login)
-  const setLoginMode = useAuthStore((state) => state.setLoginMode)
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -34,8 +31,6 @@ const LoginPage = () => {
   const router = useRouter()
 
   async function onSubmit(payload: z.infer<typeof schema>) {
-    setLoginMode('admin')
-    login(payload.userName, 'admin')
     const response = await adminLogin(payload)
     if (response.status === 200) router.push('/admin')
     else console.log('Invalid Credentials')

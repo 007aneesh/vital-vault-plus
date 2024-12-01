@@ -1,3 +1,4 @@
+import { useTabContext } from '@/app/(screens)/admin/settings/context'
 import {
   Accordion,
   AccordionItem,
@@ -9,38 +10,28 @@ const settingsTabs = [
   { id: 'general', label: 'General' },
   { id: 'password', label: 'Password' },
   { id: 'exchange', label: 'Import / Export' },
-  { id: 'access-management', label: 'Access Management' }
+  { id: 'access-management', label: 'Access Management' },
 ]
 
-export default function SettingsSidebar({
-  activeTab,
-  onTabChange,
-  content
-}: {
-  activeTab: string
-  onTabChange: (tab: string) => void
-  content?: any
-}) {
+export default function SettingsSidebar({ content }: { content?: any }) {
+  const { activeTab, setActiveTab } = useTabContext()
   return (
     <div>
-      {/* Accordion for Mobile (sm breakpoint) */}
       <div className='block md:hidden rounded-xl'>
         <Accordion type='single' collapsible>
           {settingsTabs.map((tab) => (
             <AccordionItem key={tab.id} value={tab.id}>
-              <AccordionTrigger>{tab.label}</AccordionTrigger>
-              {/* Rendered Content */}
-              <AccordionContent>
-                <div className='p-4'>
-                  {content}
-                </div>
+              <AccordionTrigger onClick={() => setActiveTab(tab.id)}>
+                {tab.label}
+              </AccordionTrigger>
+              <AccordionContent className='border-t-2'>
+                <div className='p-4'>{content}</div>
               </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>
       </div>
 
-      {/* Sidebar for Desktop (md and larger) */}
       <nav className='hidden md:block space-y-2'>
         {settingsTabs.map((tab) => (
           <button
@@ -50,7 +41,7 @@ export default function SettingsSidebar({
                 ? 'bg-blue-100 text-blue-600'
                 : 'hover:bg-gray-100'
             }`}
-            onClick={() => onTabChange(tab.id)}
+            onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
           </button>

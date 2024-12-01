@@ -1,9 +1,16 @@
-import {
+export {
   IconArrowLeft,
   IconBrandTabler,
   IconSettings,
   IconUserBolt,
-  IconX
+  IconX,
+  IconUserFilled,
+  IconCalendarClock,
+  IconReportMedical,
+  IconHistory,
+  IconPillFilled,
+  IconBrandVisa,
+  IconReport,
+  IconAmbulance,
+  IconHelp,
 } from '@tabler/icons-react'
-
-export { IconArrowLeft, IconBrandTabler, IconSettings, IconUserBolt, IconX }

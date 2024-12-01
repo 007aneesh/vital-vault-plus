@@ -5,8 +5,6 @@ import {IconArrowLeft} from "@tabler/icons-react"
 import { useRouter } from "next/navigation";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  // const { session } = useAuthStore();
-  // if(session) return null;
 
   const router = useRouter();
 

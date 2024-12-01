@@ -6,9 +6,9 @@ import React from 'react'
 
 export const columns: ColumnDef<Person, any>[] = [
   {
-    accessorKey: 'aadhar',
-    id: 'aadhar',
-    header: () => 'Aadhar Number',
+    accessorKey: 'employee_id',
+    id: 'employee_id',
+    header: () => 'Employee Id',
     meta: {
       filterVariant: 'text',
       pinned: 'left',
@@ -58,6 +58,14 @@ export const columns: ColumnDef<Person, any>[] = [
     },
   },
   {
+    accessorKey: 'aadhar',
+    id: 'aadhar',
+    header: () => 'Aadhar Number',
+    meta: {
+      filterVariant: 'text',
+    },
+  },
+  {
     accessorKey: 'address',
     id: 'address',
     header: () => 'Address',
@@ -69,22 +77,6 @@ export const columns: ColumnDef<Person, any>[] = [
     accessorKey: 'gender',
     id: 'gender',
     header: () => 'Gender',
-    meta: {
-      filterVariant: 'select',
-    },
-  },
-  {
-    accessorKey: 'lastVisit',
-    id: 'lastVisit',
-    header: 'Last Visit',
-    meta: {
-      filterVariant: 'text',
-    },
-  },
-  {
-    accessorKey: 'status',
-    id: 'status',
-    header: 'Status',
     meta: {
       filterVariant: 'select',
     },

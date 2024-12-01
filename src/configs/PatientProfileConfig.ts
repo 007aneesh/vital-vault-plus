@@ -18,11 +18,11 @@ export const patient_profile_config: PatientProfileConfig = {
 }
 
 export const timeline_config: TimelineEntry[] = [
-  { date: 'Dec 2022', label: 'Pre-diabetic', a1c: '10.4' },
-  { date: 'Jan 2022', label: 'Type 2', a1c: '10.4' },
-  { date: 'Jul 2021', label: 'Chronic thyroid disorder', a1c: '10.4' },
-  { date: 'Jul 2021', label: 'Angina Pectoris', a1c: '10.4' },
-  { date: 'Jul 2021', label: 'Stroke', a1c: '10.4' },
+  { date: 'Dec 2022', label: 'Pre-diabetic' },
+  { date: 'Jan 2022', label: 'Type 2' },
+  { date: 'Jul 2021', label: 'Chronic thyroid disorder' },
+  { date: 'Jul 2021', label: 'Angina Pectoris' },
+  { date: 'Jul 2021', label: 'Stroke' },
 ]
 
 export const medical_history_config: MedicalHistoryConfig = {
@@ -42,18 +42,16 @@ export const medical_history_config: MedicalHistoryConfig = {
 export const medications_config: Medication[] = [
   {
     name: 'ACTRAPID ® HM 1',
-    status: 'Adherent',
-    sig: '--',
     start_date: '--',
     assigned_by: 'Patient',
     note: '--',
+    date: '12-12-12',
   },
   {
     name: 'Amaryl 1 mg',
-    status: 'Adherent',
-    sig: '--',
     start_date: '--',
     assigned_by: 'Patient',
     note: '--',
+    date: '12-1-02',
   },
 ]

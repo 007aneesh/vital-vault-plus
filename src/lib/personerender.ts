@@ -8,9 +8,11 @@ const range = (len: number) => {
 const newPerson = (): Person => {
   return {
     id: faker.number.int({ min: 1000000000000, max: 9999999999999 }),
+    employee_id: faker.number.int({ min: 1000000000000, max: 9999999999999 }),
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     aadhar: faker.number.int({ min: 1000000000000, max: 9999999999999 }),
+    role: faker.helpers.arrayElement(['Doctor', 'Nurse', 'Desk']),
     age: faker.number.int({ min: 18, max: 100 }),
     contact: faker.number.int({ min: 1000000000, max: 9999999999 }),
     address: faker.location.streetAddress(),

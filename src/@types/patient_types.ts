@@ -17,7 +17,6 @@ interface PatientProfileConfig {
 interface TimelineEntry {
   date: string
   label: string
-  a1c: string
 }
 
 interface MedicalHistoryConfig {
@@ -30,11 +29,10 @@ interface MedicalHistoryConfig {
 
 interface Medication {
   name: string
-  status: string
-  sig: string
   start_date: string
   assigned_by: string
   note: string
+  date: string
 }
 
 export type {

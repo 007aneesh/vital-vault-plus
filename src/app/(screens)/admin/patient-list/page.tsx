@@ -4,7 +4,7 @@
 import { columns } from './columns'
 import { DataTable } from '@/components/ui/data-table'
 import React, { useEffect, useState } from 'react'
-import { makeData } from './makeData'
+import { makeData } from '@/lib/personerender'
 import AddPatient from '@/components/sections/addPatient'
 import {
   Drawer,
@@ -44,9 +44,9 @@ export default function Page() {
     setData(makeData(50))
   }
 
-   const handleRowClick = (data: any) => {
+  const handleRowClick = (data: any) => {
     router.push(`/admin/patient-list/patient/${data.id}`)
-   }
+  }
 
   useEffect(() => {
     getData()
@@ -74,7 +74,7 @@ export default function Page() {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <Drawer >
+        <Drawer>
           <DrawerTrigger variant='secondary' className='w-full md:w-auto'>
             Add new patient
           </DrawerTrigger>
@@ -93,6 +93,7 @@ export default function Page() {
         </Drawer>
       </div>
 
+      {/* <Button onClick={() => clearFilters()}>Clear filters</Button> */}
       <DataTable
         columns={columns}
         data={data}
