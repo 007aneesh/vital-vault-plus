@@ -8,9 +8,13 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      
+      {
+        protocol: 'https',
+        hostname: 'vital-vault-bucket.vercel.app',
+        pathname: '/**',
+      },
     ],
   },
-};
+}
 
 export default nextConfig;

@@ -1,27 +1,41 @@
-export const imageLinks = {
-    home: {
-        background: 'https://github.com/vital-vault-plus/images-bucket/blob/main/homepage-background.jpg?raw=true',
-    },
-    testimonials: {
-      adele: '',
-      rohan: '',
-      jonhy: '',
-      kevin: '',
-    },
-    features: {
-        centralizedDataStorage: '',
-        dataSecurity: '/path-to-image/do-not-disturb.png',
-        interoperability: '/path-to-image/do-not-disturb.png',
-        dataInsights: '/path-to-image/do-not-disturb.png',
-        dataBackup: '/path-to-image/do-not-disturb.png',
-        patientDataAccess: '/path-to-image/do-not-disturb.png',
-    },
-    demo: {
-        step1: 'https://vital-vault-bucket.vercel.app/Home/demo-step-1.svg',
-        step2: 'https://vital-vault-bucket.vercel.app/Home/demo-step-2.svg',
-        step3: 'https://vital-vault-bucket.vercel.app/Home/demo-step-3.svg',
-        step4: 'https://vital-vault-bucket.vercel.app/Home/demo-step-4.svg',
-    }
-    
-  };
-  
+export const ImageLinks = {
+  user_profile: 'https://vital-vault-bucket.vercel.app/user_profile.png',
+  home_page: {
+    background:
+      'https://github.com/vital-vault-plus/images-bucket/blob/main/homepage-background.jpg?raw=true',
+  },
+  testimonials: {
+    temp: 'https://vital-vault-bucket.vercel.app/user_profile.png',
+    adele: '',
+    rohan: '',
+    jonhy: '',
+    kevin: '',
+  },
+  features: {
+    centralizedDataStorage:
+      'https://vital-vault-bucket.vercel.app/features/centralizedDataStorage.svg',
+    dataSecurity:
+      'https://vital-vault-bucket.vercel.app/features/dataSecurity.svg',
+    interoperability:
+      'https://vital-vault-bucket.vercel.app/features/interoperability.svg',
+    dataInsights:
+      'https://vital-vault-bucket.vercel.app/features/dataInsignhts.svg',
+    dataBackup: 'https://vital-vault-bucket.vercel.app/features/dataBackup.svg',
+    patientDataAccess:
+      'https://vital-vault-bucket.vercel.app/features/patientDataAccess.svg',
+  },
+  demo: {
+    step1:
+      'https://vital-vault-bucket.vercel.app/home_page/demo/fill_details.png',
+    step2: 'https://vital-vault-bucket.vercel.app/home_page/demo/login.png',
+    step3: 'https://vital-vault-bucket.vercel.app/home_page/demo/explore.png',
+    step4:
+      'https://vital-vault-bucket.vercel.app/home_page/demo/understand.png',
+  },
+  temp: {
+    doc_landing:
+      'https://vital-vault-bucket.vercel.app/home_page/hero/doc_landing.png',
+    mobile_landing:
+      'https://vital-vault-bucket.vercel.app/home_page/hero/mobile_landing.png',
+  },
+}

@@ -13,4 +13,9 @@ export {
   IconReport,
   IconAmbulance,
   IconHelp,
+  IconPlus,
+  IconClock,
+  IconShieldLock,
+  IconShieldCheckFilled,
+  IconCloudUp,
 } from '@tabler/icons-react'

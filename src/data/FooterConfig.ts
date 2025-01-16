@@ -1,19 +1,25 @@
-
 export const footer_section = [
   {
-    title: "Solutions",
-    links: ["Marketing", "Analytics", "Automation", "Commerce", "Insights"],
+    title: 'Support',
+    links: [
+      { label: 'Submit ticket', href: '/support/submit-ticket' },
+      { label: 'Documentation', href: '/docs' },
+      { label: 'Guides', href: '/guides' },
+    ],
   },
   {
-    title: "Support",
-    links: ["Submit ticket", "Documentation", "Guides"],
+    title: 'Company',
+    links: [
+      { label: 'About Us', href: '/about-us' },
+      { label: 'Blog', href: '/blog' },
+    ],
   },
   {
-    title: "Company",
-    links: ["About", "Blog", "Jobs", "Press"],
+    title: 'Legal',
+    links: [
+      { label: 'Terms of service', href: '/legal/terms' },
+      { label: 'Privacy policy', href: '/legal/privacy' },
+      { label: 'License', href: '/legal/license' },
+    ],
   },
-  {
-    title: "Legal",
-    links: ["Terms of service", "Privacy policy", "License"],
-  },
-];
+]
