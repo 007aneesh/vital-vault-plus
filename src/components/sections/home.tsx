@@ -44,12 +44,12 @@ function Demo() {
   ]
 
   return (
-    <div className='relative py-16 bg-dashboard-background px-8'>
+    <div className='relative py-16 bg-dashboard px-8'>
       <div className='text-center max-w-2xl mx-auto mb-8'>
         <h2 className='text-xl md:text-4xl font-bold'>Book a Demo with us</h2>
         <p className='text-primary text-sm md:text-base mt-4 relative inline-block'>
           <span className='absolute inset-x-0 top-1/2 transform -translate-y-1/2 border-b-2 border-primary w-full sm:w-[120%] md:w-[130%] lg:w-[150%] sm:left-[-15%] md:left-[-25%]'></span>
-          <span className='relative z-10 bg-dashboard-background px-2'>
+          <span className='relative z-10 bg-dashboard px-2'>
             How Demo Works
           </span>
         </p>
@@ -123,12 +123,12 @@ function Features() {
   ]
 
   return (
-    <div className='py-10 px-8 md:py-20 bg-dashboard-background text-center'>
+    <div className='py-10 px-8 md:py-20 bg-dashboard text-center'>
       <div className='text-center max-w-2xl mx-auto mb-8'>
         <h2 className='text-xl md:text-4xl font-bold'>Features</h2>
         <p className='text-primary text-sm md:text-base mt-4 relative inline-block'>
           <span className='absolute inset-x-0 top-1/2 transform -translate-y-1/2 border-b-2 border-primary w-full sm:w-[120%] md:w-[130%] lg:w-[150%] sm:left-[-15%] md:left-[-25%]'></span>
-          <span className='relative z-10 bg-dashboard-background px-2'>
+          <span className='relative z-10 bg-dashboard px-2'>
             What We Provide
           </span>
         </p>
@@ -277,13 +277,22 @@ function Home() {
                 ))}
               </div>
             </Card>
-            <Button
-              variant='secondary'
-              className='mt-2 md:text-lg py-5 mb-16'
-              onClick={() => router.push('/register')}
-            >
-              Get Started!
-            </Button>
+            <div className='flex flex-row gap-5 items-center mt-2 mb-16'>
+              <Button
+                variant='ghost'
+                onClick={() => {}}
+                className=' md:text-lg py-5 '
+              >
+                Book a demo!
+              </Button>
+              <Button
+                variant='secondary'
+                className=' md:text-lg py-5 '
+                onClick={() => router.push('/register')}
+              >
+                Get Started!
+              </Button>
+            </div>
           </div>
         </div>
         <div className='absolute bottom-0 right-0 hidden md:flex items-end justify-end'>

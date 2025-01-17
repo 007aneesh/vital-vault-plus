@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import React, { useState } from 'react'
@@ -23,7 +24,6 @@ import { cn } from '@/lib/utils'
 import LogoImg from '@/app/favicon.ico'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-
   const links = [
     {
       label: 'Dashboard',
@@ -137,7 +137,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </SidebarBody>
         </Sidebar>
-        <div className='flex-1 overflow-y-auto scrollbar-hidden bg-dashboard-background px-6 py-8'>
+        <div className='flex-1 overflow-y-auto scrollbar-hidden bg-dashboard px-6 py-8'>
           {children}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { footer_section } from '@/data/FooterConfig'
+import { ImageLinks } from '@/lib/imageLinks'
 import {
   IconBrandFacebook,
   IconBrandInstagram,
@@ -16,7 +17,7 @@ const Footer = () => {
         <div className='w-full h-full flex flex-col lg:flex-row justify-between'>
           <div>
             <Image
-              src='https://vital-vault-bucket.vercel.app/favicon.ico'
+              src={ImageLinks?.white_logo}
               alt='logo'
               width={100}
               height={100}
@@ -47,7 +48,7 @@ const Footer = () => {
         </div>
 
         <div className='border-t border-gray-700 pt-8 flex flex-col sm:flex-row items-center justify-between'>
-          <p className='text-gray-500 hidden md:flex text-sm text-center sm:text-left mt-6 sm:mb-0 max-w-full sm:max-w-md lg:max-w-lg break-words'>
+          <p className='text-secondary-grey hidden md:flex text-sm text-center sm:text-left mt-6 sm:mb-0 max-w-full sm:max-w-md lg:max-w-lg break-words'>
             © Powered By VitalCare Private Ltd. All rights reserved.
           </p>
           <div className='flex space-x-6'>
@@ -81,7 +82,7 @@ const Footer = () => {
             />
             <button
               type='submit'
-              className='px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md w-full sm:w-auto text-sm sm:text-base transition duration-150'
+              className='px-6 py-2 bg-secondary hover:bg-primary text-white rounded-md w-full sm:w-auto text-sm sm:text-base transition duration-150'
             >
               Subscribe
             </button>

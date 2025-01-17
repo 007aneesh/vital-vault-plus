@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import React, { useState } from 'react'
@@ -99,7 +100,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </SidebarBody>
         </Sidebar>
-        <div className='flex-1 overflow-y-auto scrollbar-hidden bg-dashboard-background px-6 py-8'>
+        <div className='flex-1 overflow-y-auto scrollbar-hidden bg-dashboard px-6 py-8'>
           {children}
         </div>
       </div>
@@ -107,7 +108,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   )
 }
 
-export const Logo = (data?: any) => {
+export const Logo = (data: any) => {
   const { is_admin, name, logo } = data
   return (
     <Link

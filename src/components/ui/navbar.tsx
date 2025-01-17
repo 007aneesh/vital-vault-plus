@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { IconMenu2, IconX } from '@tabler/icons-react'
 import _ from 'lodash'
 import { Button } from './button'
+import Image from 'next/image'
+import { ImageLinks } from '@/lib/imageLinks'
 
 type NavItem = {
   text: string
@@ -45,15 +47,24 @@ const Navbar = ({ navItems }: NavbarProps) => {
           isScrolled ? 'bg-white/70 backdrop-blur-md shadow-md' : ''
         }`}
       >
-        <div className='font-bold text-xl md:flex-shrink-0'>
-          <Link href='/'>Vital Vault</Link>
+        <div className='font-bold text-xl md:flex-shrink-0 min-w-44 justify-start'>
+          <Link href='/' className='flex items-center gap-1'>
+            <Image
+              src={ImageLinks?.black_logo}
+              alt='logo'
+              height={500}
+              width={500}
+              className='w-16 h-8'
+            />
+            Vital Vault
+          </Link>
         </div>
 
         <div className='hidden md:flex md:flex-grow md:justify-center'>
           <ul className='flex space-x-8 items-center justify-center'>
             {_.map(navItems, (item) => (
               <li key={item.link}>
-                <Link href={item.link} className='text-lg  hover:text-blue-500'>
+                <Link href={item.link} className='text-lg  hover:underline'>
                   {item.text}
                 </Link>
               </li>
@@ -61,10 +72,7 @@ const Navbar = ({ navItems }: NavbarProps) => {
           </ul>
         </div>
 
-        <div className='hidden md:flex gap-4'>
-          <Button variant='ghost' onClick={() => {}}>
-            Book a demo!
-          </Button>
+        <div className='hidden md:flex gap-4 min-w-44 justify-end'>
           <Button variant='secondary' onClick={() => {}}>
             Register
           </Button>

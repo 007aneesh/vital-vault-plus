@@ -11,6 +11,7 @@ export const footer_section = [
     title: 'Company',
     links: [
       { label: 'About Us', href: '/about-us' },
+      { label: 'Pricing', href: '/pricing' },
       { label: 'Blog', href: '/blog' },
     ],
   },

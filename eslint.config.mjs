@@ -39,16 +39,17 @@ export default [
     rules: {
       'no-unused-vars': 'error',
       'no-console': 'warn',
-      'prefer-const': 'off',
       quotes: ['error', 'single'],
       'jsx-quotes': ['error', 'prefer-single'],
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
     },
+    ignores: ['tailwind.config.ts', '**/.*'],
   },
   ...compat.extends('eslint:recommended'),
   ...compat.extends('plugin:@typescript-eslint/recommended'),
   ...compat.extends('plugin:react/recommended'),
+  ...compat.extends('next/core-web-vitals'),
   pluginReactConfig,
 ]
