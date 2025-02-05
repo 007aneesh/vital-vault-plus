@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Roboto_Mono } from 'next/font/google'
 import './globals.css'
+import { Suspense } from 'react'
+import GlobalLoader from '@/components/ui/globalLoading'
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'] })
 
@@ -19,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={`${robotoMono.className} font-sans antialiased`}>
-        {children}
+        <Suspense fallback={<GlobalLoader />}>{children}</Suspense>
       </body>
     </html>
   )
