@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
@@ -24,7 +25,12 @@ import {
   TableHeader,
   TableRow,
 } from './table'
-import { CSSProperties, InputHTMLAttributes, useMemo } from 'react'
+import {
+  CSSProperties,
+  InputHTMLAttributes,
+  UIEventHandler,
+  useMemo,
+} from 'react'
 import { useState, useEffect } from 'react'
 import { Input } from './input'
 import {
@@ -47,8 +53,8 @@ declare module '@tanstack/react-table' {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  fetchMoreData?: () => void 
-  hasMoreData?: boolean 
+  fetchMoreData?: () => void
+  hasMoreData?: boolean
   onRowClick?: (rowData: TData) => void
 }
 
@@ -145,7 +151,7 @@ export function DataTable<TData, TValue>({
     },
   })
 
-  const handleScroll = (e: UIEvent<HTMLDivElement, UIEvent>) => {
+  const handleScroll: UIEventHandler<HTMLDivElement> = (e) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget
     if (scrollHeight - scrollTop <= clientHeight * 1.5 && hasMoreData) {
       if (fetchMoreData) fetchMoreData()
@@ -199,7 +205,7 @@ export function DataTable<TData, TValue>({
             <TableRow
               key={row.id}
               data-state={row.getIsSelected() && 'selected'}
-              className={`cursor-pointer group hover:bg-muted overflow-hidden  truncate`}
+              className='cursor-pointer group hover:bg-muted overflow-hidden  truncate'
               onClick={() => onRowClick?.(row.original)}
               style={{ height: 'auto' }}
             >
@@ -281,15 +287,15 @@ function Filter({ column }: { column: Column<any, unknown> }) {
     </div>
   ) : filterVariant === 'select' ? (
     <Select
-      onValueChange={
-        (value) => column?.setFilterValue(value === 'all' ? '' : value)
+      onValueChange={(value) =>
+        column?.setFilterValue(value === 'all' ? '' : value)
       }
-      value={columnFilterValue?.toString() || 'all'} 
+      value={columnFilterValue?.toString() || 'all'}
     >
       <SelectTrigger className='mt-2 h-7'>
         <SelectValue placeholder='Select a Gender' />
       </SelectTrigger>
-      <SelectContent >
+      <SelectContent>
         <SelectGroup>
           <SelectItem value='all'>All</SelectItem>{' '}
           {sortedUniqueValues?.map((value) => (
@@ -302,12 +308,11 @@ function Filter({ column }: { column: Column<any, unknown> }) {
     </Select>
   ) : (
     <>
-
       <DebouncedInput
         type='text'
         value={(columnFilterValue ?? '') as string}
         onChange={(value) => column.setFilterValue(value)}
-        placeholder={`Search...`}
+        placeholder='Search...'
         className='w-36 border shadow rounded'
         list={column.id + 'list'}
       />

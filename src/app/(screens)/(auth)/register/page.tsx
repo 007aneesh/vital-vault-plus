@@ -83,7 +83,7 @@ const RegisterPage = () => {
             render={({ field }) => (
               <>
                 <FormItem>
-                  <FormLabel className={`flex items-center justify-between`}>
+                  <FormLabel className='flex items-center justify-between'>
                     {label}
                     <FormMessage />
                   </FormLabel>
