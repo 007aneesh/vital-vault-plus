@@ -90,6 +90,18 @@
     @apply font-bold text-xl md:text-4xl text-center;
   }
 
+  .jsoneditor {
+    min-height: 500px;
+    background: white;
+    border: none !important;
+  }
+
+  .jsoneditor-menu {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: hsl(221, 72%, 51%);
+  }
+
   .black-gradient {
     background: linear-gradient(90deg, #161a31 0%, #06091f 100%);
   }
