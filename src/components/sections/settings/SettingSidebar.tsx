@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useTabContext } from '@/app/(screens)/admin/settings/context'
 import {
   Accordion,
@@ -11,13 +12,15 @@ const settingsTabs = [
   { id: 'password', label: 'Password' },
   { id: 'exchange', label: 'Import / Export' },
   { id: 'access-management', label: 'Access Management' },
+  { id: 'setting_configuration', label: 'Setting Configuration' },
+  { id: 'role_management', label: 'Role Management' },
 ]
 
 export default function SettingsSidebar({ content }: { content?: any }) {
   const { activeTab, setActiveTab } = useTabContext()
   return (
     <div>
-      <div className='block md:hidden rounded-xl'>
+      <div className='block lg:hidden rounded-xl'>
         <Accordion type='single' collapsible>
           {settingsTabs.map((tab) => (
             <AccordionItem key={tab.id} value={tab.id}>
@@ -32,14 +35,12 @@ export default function SettingsSidebar({ content }: { content?: any }) {
         </Accordion>
       </div>
 
-      <nav className='hidden md:block space-y-2'>
+      <nav className='hidden lg:block space-y-2'>
         {settingsTabs.map((tab) => (
           <button
             key={tab.id}
             className={`block w-full p-3 text-left rounded ${
-              activeTab === tab.id
-                ? 'bg-blue-100 text-blue-600'
-                : 'hover:bg-gray-100'
+              activeTab === tab.id ? 'bg-gray-200' : 'hover:bg-muted'
             }`}
             onClick={() => setActiveTab(tab.id)}
           >

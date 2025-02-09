@@ -95,11 +95,11 @@
     background: white;
     border: none !important;
   }
-
-  .jsoneditor-menu {
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    background-color: hsl(221, 72%, 51%);
+  
+  .jsoneditor-tree,
+  div.jsoneditor,
+  td {
+    vertical-align: middle !important;
   }
 
   .black-gradient {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import { FormProvider, useForm } from 'react-hook-form'
@@ -12,6 +13,8 @@ import { FormField, FormItem } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { z } from 'zod'
+import JsonEditor from './(json_editor)/json_editor'
+import RolesTable from './(role_management)/role_management'
 
 export default function SettingsSidebar() {
   const { activeTab } = useTabContext()
@@ -77,6 +80,16 @@ export default function SettingsSidebar() {
       )}
       {activeTab === 'exchange' && <div>exchange</div>}
       {activeTab === 'access-management' && <div>access-management</div>}
+      {activeTab === 'setting_configuration' && (
+        <div>
+          <JsonEditor />
+        </div>
+      )}
+      {activeTab === 'role_management' && (
+        <div>
+          <RolesTable />
+        </div>
+      )}
     </div>
   )
 }

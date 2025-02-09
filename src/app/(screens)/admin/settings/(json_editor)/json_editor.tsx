@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// pages/settings-editor.js
 'use client'
 
 import { useRef, useEffect, useState } from 'react'
-import JSONEditor from 'jsoneditor'
+import JSONEditor, { JSONEditorMode } from 'jsoneditor'
 import 'jsoneditor/dist/jsoneditor.min.css'
 import {
   Select,
@@ -15,43 +14,41 @@ import {
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 
-// Define the list of settings category keys (for demo purposes)
-const settingsCategories = [
-  { value: 'providerSettings', label: 'Provider Settings' },
-  { value: 'orgSettings', label: 'Organization Settings' },
-  { value: 'employeeSettings', label: 'Employee Settings' },
+const _keys = [
+  { value: 'tenant_setting_keys', label: 'Tenant Settings' },
+  { value: 'organisation_settings', label: 'Organization Settings' },
+  { value: 'employee_settings', label: 'Employee Settings' },
 ]
 
-// Sample default configurations for each settings category.
-const defaultConfigurations = {
-  providerSettings: {
-    featureFlags: {
-      enableBetaFeatures: true,
-      maxAPIRequests: 1000,
+const default_configurations: any = {
+  tenant_setting_keys: {
+    feature_flags: {
+      enable_beta_features: true,
+      max_api_requests: 1000,
     },
-    uiSettings: {
+    ui_settings: {
       theme: 'dark',
       layout: 'grid',
     },
   },
-  orgSettings: {
-    orgPolicy: {
-      allowUserSignup: true,
-      maxUsers: 500,
+  organisation_settings: {
+    org_policy: {
+      allow_user_signup: true,
+      max_users: 500,
     },
     customization: {
-      logoUrl: '',
-      colorScheme: 'blue',
+      logo_url: '',
+      color_scheme: 'blue',
     },
   },
-  employeeSettings: {
+  employee_settings: {
     attendance: {
       clockInEnabled: true,
       allowedLateMinutes: 15,
     },
     permissions: {
       canAccessDashboard: true,
-      canViewPayroll: false,
+      can_view_payroll: false,
     },
   },
 }
@@ -65,18 +62,17 @@ const schema = {
 
 export default function SettingsEditor() {
   const editorContainerRef = useRef(null)
-  const editorInstanceRef = useRef(null)
+  const editorInstanceRef = useRef<JSONEditor | null>(null)
   const [isChanged, setIsChanged] = useState(false)
-  // Store the selected category as a string.
-  const [selectedCategory, setSelectedCategory] = useState(null)
-  const [loadedConfig, setLoadedConfig] = useState(null)
 
-  // Initialize JSONEditor once when the component mounts.
+  const [selectedCategory, setSelectedCategory] = useState<any>(null)
+  const [loadedConfig, setLoadedConfig] = useState<any>({})
+
   useEffect(() => {
     if (editorContainerRef.current && !editorInstanceRef.current) {
       const options = {
-        mode: 'view',
-        modes: ['code', 'tree', 'view', 'text'],
+        mode: 'tree' as JSONEditorMode,
+        modes: ['code', 'tree', 'view', 'text'] as JSONEditorMode[],
         schema,
         onChange: () => {
           try {
@@ -106,8 +102,8 @@ export default function SettingsEditor() {
 
   // Load configuration for the selected settings category.
   const handleLoadConfiguration = () => {
-    if (selectedCategory && defaultConfigurations[selectedCategory]) {
-      const configToLoad = defaultConfigurations[selectedCategory]
+    if (selectedCategory && default_configurations[selectedCategory]) {
+      const configToLoad = default_configurations[selectedCategory]
       setLoadedConfig(configToLoad)
       if (editorInstanceRef.current) {
         editorInstanceRef.current.set(configToLoad)
@@ -162,27 +158,24 @@ export default function SettingsEditor() {
 
   return (
     <div className='md:p-6 md:max-w-7xl mx-auto'>
-      <header className='mb-8'>
-        <h1 className='text-3xl font-bold text-center'>
-          Settings Configuration Editor
-        </h1>
-        <p className='mt-2 text-center text-gray-600'>
+      <header className='mb-6'>
+        <h1 className='text-2xl font-bold'>Settings Configuration Editor</h1>
+        <p className='mt-2'>
           Select a settings category and customize its configuration.
         </p>
       </header>
 
-      {/* Dropdown to select settings category */}
       <div className='flex flex-col md:flex-row items-center mb-6 gap-10'>
         <Select
-          onValueChange={(value: string) => setSelectedCategory(value)}
-          value={selectedCategory}
+          onValueChange={(value: any) => setSelectedCategory(value)}
+          value={selectedCategory || undefined}
         >
           <SelectTrigger className='h-10 md:w-auto flex-1'>
             <SelectValue placeholder='Select a configuration' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {settingsCategories.map((item) => (
+              {_keys.map((item) => (
                 <SelectItem value={item.value} key={item.value}>
                   {item.label}
                 </SelectItem>
@@ -204,40 +197,39 @@ export default function SettingsEditor() {
         <div ref={editorContainerRef} className='h-full min-h-[500px]' />
       </div>
 
-      {/* Action buttons */}
-      <div className='flex flex-wrap justify-between items-center space-y-4'>
-        <div className='flex space-x-4'>
-          <button
+      <div className='flex flex-col md:flex-row justify-between items-center'>
+        <div className='flex gap-4 w-full md:w-auto mb-4'>
+          <Button
             onClick={handleReset}
-            className='px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 transition-colors'
+            variant='destructive'
+            className='flex-1'
           >
             Reset to Default
-          </button>
-          <button
+          </Button>
+          <Button
+            variant='secondary'
             onClick={handleSave}
             disabled={!isChanged}
-            className={`px-4 py-2 rounded transition-colors ${
-              isChanged
-                ? 'bg-blue-600 text-white hover:bg-blue-700'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}
+            className='flex-1'
           >
             Save Changes
-          </button>
+          </Button>
         </div>
-        <div className='flex space-x-4'>
-          <button
+        <div className='flex gap-4 w-full md:w-auto justify-end mb-4'>
+          <Button
+            variant='outline'
             onClick={handleDownload}
-            className='px-4 py-2 border border-green-400 rounded hover:bg-green-50 transition-colors'
+            className='flex-1 border-green-400 hover:bg-green-300 transition-colors'
           >
             Download JSON
-          </button>
-          <button
+          </Button>
+          <Button
+            variant='outline'
             onClick={handleCopy}
-            className='px-4 py-2 border border-indigo-400 rounded hover:bg-indigo-50 transition-colors'
+            className='flex-1 border-indigo-400 hover:bg-indigo-300 transition-colors'
           >
             Copy to Clipboard
-          </button>
+          </Button>
         </div>
       </div>
     </div>
