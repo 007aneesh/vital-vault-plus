@@ -1,23 +1,6 @@
-const patientLoginConfig = [
+const LoginConfig = [
   {
-    id: "aadhar_card",
-    name: "Aadhar No.",
-    type: "number",
-    required: true,
-    placeholder: "Enter your Aadhar card number",
-  },
-  {
-    id: "password",
-    name: "Password",
-    type: "password",
-    required: true,
-    placeholder: "Enter your password",
-  },
-];
-
-const adminLoginConfig = [
-  {
-    id: "userName",
+    id: "username",
     name: "Username",
     type: "text",
     required: true,
@@ -29,14 +12,7 @@ const adminLoginConfig = [
     type: "password",
     required: true,
     placeholder: "Enter your password",
-  },
-  // {
-  //   id: "admin_security_key",
-  //   name: "Security Key",
-  //   type: "password",
-  //   required: true,
-  //   placeholder: "Enter your Security key",
-  // },
+  }
 ];
 
 const registerFieldConfigs = [
@@ -100,60 +76,4 @@ const registerFieldConfigs = [
   },
 ];
 
-const contactConfig = [
-  {
-    name: "fullName",
-    label: "Full Name",
-    placeholder: "e.g. John Doe",
-    type: "text",
-  },
-  {
-    name: "email",
-    label: "Email",
-    placeholder: "e.g. johndoe@gmail.com",
-    type: "email",
-  },
-  {
-    name: "phoneNumber",
-    label: "Phone Number",
-    placeholder: "e.g. 9999888877",
-    type: "number",
-  },
-  {
-    name: "clinicHospitalOrgName",
-    label: "Clinic/ Hospital/ Org Name",
-    placeholder: "e.g. Sun Pharma",
-    type: "text",
-  },
-  {
-    name: "city",
-    label: "City",
-    placeholder: "e.g. Indore",
-    type: "text",
-  },
-  {
-    name : "countryRegion",
-    label: "Country/ Region",
-    placeholder: "e.g. India",
-    type: "text",
-  },
-  {
-    name: "preferredTime",
-    label: "Preferred time to call Back",
-    placeholder: "e.g. 11:00 AM",
-    type: "datetime",
-  },
-  {
-    name: "message",
-    label: "Message",
-    placeholder: "Write Something here...",
-    type: "text",
-  },
-];
-
-export {
-  patientLoginConfig,
-  registerFieldConfigs,
-  adminLoginConfig,
-  contactConfig
-};
+export { registerFieldConfigs, LoginConfig }

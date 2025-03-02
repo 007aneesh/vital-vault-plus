@@ -25,8 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from './table'
-import { CSSProperties, InputHTMLAttributes, useMemo } from 'react'
-import { useState, useEffect, UIEventHandler } from 'react'
+import { CSSProperties, InputHTMLAttributes, useMemo, useState, useEffect, UIEventHandler } from 'react'
 import { Input } from './input'
 import {
   Select,

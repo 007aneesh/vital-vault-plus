@@ -14,7 +14,7 @@ type NavItem = {
   link: string
 }
 export default function Page() {
-  const router = useRouter();
+  const router = useRouter()
 
   const navItems: NavItem[] = [
     { text: 'Home', link: '/' },
@@ -22,17 +22,11 @@ export default function Page() {
     { text: 'Contact Us', link: '/contact-us' },
   ]
 
-  const fields: any = [
+  const fields = [
     {
       name: 'name',
       type: 'text',
       placeholder: 'Your name',
-      required: true,
-    },
-    {
-      name: 'organisation',
-      type: 'text',
-      placeholder: 'Your Organisation',
       required: true,
     },
     {
@@ -42,48 +36,41 @@ export default function Page() {
       required: true,
     },
     {
-      name: 'subject',
+      name: 'organisation',
       type: 'text',
-      placeholder: 'Subject',
+      placeholder: 'Your Organisation',
       required: true,
     },
     {
-      name: 'message',
-      type: 'textarea',
-      placeholder: 'Enter your message',
+      name: 'date',
+      type: 'date',
+      placeholder: 'DD/MM/YYYY',
       required: true,
     },
   ]
 
- const schema = z.object({
-   name: z
-     .string()
-     .min(1, 'Name is required')
-     .min(3, 'Name must be at least 3 characters')
-     .max(50, 'Name must be at most 50 characters'),
 
-   organisation: z
-     .string()
-     .min(1, 'Please enter your organisation name')
-     .min(2, 'Organisation name must be at least 2 characters')
-     .max(100, 'Organisation name must be at most 100 characters'),
+  const schema = z.object({
+    name: z
+      .string()
+      .min(1, 'Name is required')
+      .min(3, 'Name must be at least 3 characters')
+      .max(50, 'Name must be at most 50 characters'),
 
-   email: z
-     .string()
-     .min(1, 'Email is required')
-     .email('Please enter a valid email address'),
+    email: z
+      .string()
+      .min(1, 'Email is required')
+      .email('Please enter a valid email address'),
 
-   subject: z
-     .string()
-     .min(1, 'Subject is required')
-     .min(5, 'Subject must be at least 5 characters')
-     .max(100, 'Subject must be at most 100 characters'),
+    organisation: z
+      .string()
+      .min(1, 'Please enter your organisation name')
+      .min(3, 'Organisation name must be at least 3 characters')
+      .max(100, 'Organisation name must be at most 100 characters'),
 
-   message: z
-     .string()
-     .min(1, 'Message is required')
-     .min(10, 'Message must be at least 10 characters long'),
- })
+    date: z.string().min(1, 'Date is required'),
+  })
+
 
   type FormData = z.infer<typeof schema>
 
@@ -93,10 +80,15 @@ export default function Page() {
 
   const onSubmit = (data: FormData) => {
     console.log('Contact Us Form Data:', data)
+    form.reset()
   }
 
   const contact_details = [
-    { icon: 'IconMail', text: 'noreplyvitalvault@gmail.com', link: 'mailto:noreplyvitalvault@gmail.com' },
+    {
+      icon: 'IconMail',
+      text: 'noreplyvitalvault@gmail.com',
+      link: 'mailto:noreplyvitalvault@gmail.com',
+    },
   ]
 
   return (
@@ -106,10 +98,10 @@ export default function Page() {
         <div className='flex-1 flex items-start justify-center gap-4 w-[90%] md:w-full md:max-w-[60%] mb-8'>
           <div className='flex flex-col items-start w-full lg:w-auto'>
             <h1 className='text-2xl md:text-3xl font-semibold text-left'>
-              Contact Us
+              Book a Demo
             </h1>
-            <p className='text-base text-left mt-1'>
-              We are here to help you. Feel free to reach out to us.
+            <p className='text-base text-left mt-1 text-wrap'>
+              A step towards greatness. We will share the details with you soon.
             </p>
             <div className='flex gap-4 mt-2 pt-3 border-t-2 border-black/10 w-full'>
               <div className='flex items-center gap-2'>
@@ -135,7 +127,7 @@ export default function Page() {
               form={form}
               fields={fields}
               onSubmit={onSubmit}
-              buttonLabel='Send Message'
+              buttonLabel='Book Slot'
             />
           </div>
         </div>

@@ -8,6 +8,8 @@ import _ from 'lodash'
 import { Button } from './button'
 import Image from 'next/image'
 import { ImageLinks } from '@/lib/imageLinks'
+import clsx from 'clsx'
+import { useRouter } from 'next/navigation'
 
 type NavItem = {
   text: string
@@ -16,11 +18,12 @@ type NavItem = {
 
 type NavbarProps = {
   navItems: NavItem[]
+  style?: string
 }
 
-const Navbar = ({ navItems }: NavbarProps) => {
+const Navbar = ({ navItems, style }: NavbarProps) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false)
-
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -43,9 +46,9 @@ const Navbar = ({ navItems }: NavbarProps) => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-20 p-4 md:px-16 flex items-center justify-between md:justify-start ${
+        className={clsx(`fixed top-0 left-0 w-full z-20 p-4 md:px-16 flex items-center justify-between md:justify-start ${
           isScrolled ? 'bg-white/70 backdrop-blur-md shadow-md' : ''
-        }`}
+        }`, style)}
       >
         <div className='font-bold text-xl md:flex-shrink-0 min-w-44 justify-start'>
           <Link href='/' className='flex items-center gap-1'>
@@ -73,8 +76,10 @@ const Navbar = ({ navItems }: NavbarProps) => {
         </div>
 
         <div className='hidden md:flex gap-4 min-w-44 justify-end'>
-          <Button variant='secondary' onClick={() => {}}>
-            Register
+          <Button variant='secondary' onClick={() => {
+            router.push('/book-a-demo')
+          }}>
+            Book a Demo
           </Button>
         </div>
 
