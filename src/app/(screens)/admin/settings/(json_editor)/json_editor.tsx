@@ -157,7 +157,7 @@ export default function SettingsEditor() {
   }
 
   return (
-    <div className='md:p-6 md:max-w-7xl mx-auto'>
+    <div className='lg:p-6 md:max-w-7xl mx-auto'>
       <header className='mb-6'>
         <h1 className='text-2xl font-bold'>Settings Configuration Editor</h1>
         <p className='mt-2'>

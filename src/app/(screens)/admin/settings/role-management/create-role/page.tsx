@@ -162,7 +162,7 @@ const CreateRole = () => {
         <div className='flex justify-end gap-4'>
           <Button
             variant='outline'
-            onClick={() => router.push('/admin/settings')}
+            onClick={() => router.push('/admin/settings/role-management')}
           >
             Cancel
           </Button>

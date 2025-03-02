@@ -19,7 +19,7 @@ const EditRole = () => {
 
   useEffect(() => {
     if (!role) {
-      router.replace('/admin/settings') // Redirect if role not found
+      router.replace('/admin/settings/role-management')
     }
   }, [role, router])
 
@@ -105,7 +105,7 @@ const EditRole = () => {
       <div className='flex justify-end mt-6 gap-4'>
         <Button
           variant='outline'
-          onClick={() => router.push('/admin/settings')}
+          onClick={() => router.push('/admin/settings/role-management')}
         >
           Cancel
         </Button>

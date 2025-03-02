@@ -24,9 +24,8 @@ const schema = z
     }
   })
 
-export default function ResetPassword() {
-  const searchParams = useSearchParams()
-  const code = searchParams.get('code')
+export default function Page({ params }: { params: { code: string } }) {
+  const { code } = params
   const [loading, setLoading] = useState(false)
   console.log(code)
 
@@ -51,7 +50,7 @@ export default function ResetPassword() {
     <div className='min-h-screen flex items-center justify-center bg-gray-50'>
       <div className='max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow'>
         <div>
-          <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+          <h2 className='mt-6 text-center text-2xl font-bold text-primary-text'>
             Reset your password
           </h2>
         </div>
