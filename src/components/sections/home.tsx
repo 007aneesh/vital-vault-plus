@@ -288,7 +288,7 @@ function Home() {
               <Button
                 variant='secondary'
                 className=' md:text-lg py-5 '
-                onClick={() => router.push('/register')}
+                onClick={() => router.push('/login')}
               >
                 Get Started!
               </Button>

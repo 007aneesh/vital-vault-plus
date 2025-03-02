@@ -13,15 +13,13 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { login } from '@/actions/auth'
-import { PatientFormFields } from '@/@types/auth'
-import { patientLoginConfig as formConfig } from '@/data/FomData'
+import { LoginFormFields } from '@/@types/auth'
+import { LoginConfig } from '@/data/FomData'
 
 const schema = z.object({
-  aadhar_card: z
+  username: z
     .string()
-    .length(12, 'Aadhar must be 12 digits')
-    .transform((val) => parseInt(val, 10)),
+    .min(3, 'Please enter a valid username'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
 })
 
@@ -32,7 +30,6 @@ const LoginPage = () => {
 
   async function onSubmit(values: z.infer<typeof schema>) {
     try {
-      await login(values, 'patient')
       console.log('Login successful')
     } catch (err) {
       console.error('Invalid Credentials')
@@ -43,7 +40,7 @@ const LoginPage = () => {
     <div className='w-full flex flex-col items-center justify-center'>
       <div className='py-8 gap-2 flex flex-col items-center'>
         <h1 className='heading'>Welcome back</h1>
-        <p className='sub-heading'>Sign in as a Patient</p>
+        <p className='sub-heading'>Sign in to your managed data storage</p>
       </div>
       <div className='w-full md:max-w-sm'>
         <Form {...form}>
@@ -51,19 +48,19 @@ const LoginPage = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className='space-y-5 flex flex-col justify-center w-full'
           >
-            {formConfig.map((fieldConfig) => (
+            {LoginConfig.map((data) => (
               <FormField
-                key={fieldConfig.id}
+                key={data.id}
                 control={form.control}
-                name={fieldConfig.id as keyof PatientFormFields}
+                name={data.id as keyof LoginFormFields}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{fieldConfig.name}</FormLabel>
+                    <FormLabel>{data.name}</FormLabel>
                     <FormControl>
                       <Input
-                        type={fieldConfig.type}
+                        type={data.type}
                         className='bg-gray-200'
-                        placeholder={fieldConfig.placeholder}
+                        placeholder={data.placeholder}
                         {...field}
                       />
                     </FormControl>

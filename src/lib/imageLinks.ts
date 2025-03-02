@@ -45,4 +45,8 @@ export const ImageLinks = {
     vision: 'https://vital-vault-bucket.vercel.app/about/vision.jpg',
     future: 'https://vital-vault-bucket.vercel.app/about/future.png',
   },
+  contact: {
+    support_illustration:
+      'https://vital-vault-bucket.vercel.app/contact/support_illustration.png',
+  },
 }

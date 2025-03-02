@@ -1,3 +1,5 @@
+'use client'
+
 import { cn } from '@/lib/utils'
 import React, { useRef, useState } from 'react'
 import { motion } from 'framer-motion'
@@ -46,7 +48,7 @@ export const FileUpload = ({
     multiple: false,
     noClick: true,
     onDrop: handleFileChange,
-    onDropRejected: (error: any) => {
+    onDropRejected: (error) => {
       console.log(error)
     },
   })

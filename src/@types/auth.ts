@@ -1,30 +1,24 @@
 // login form types
-type PatientFormFields = {
-  aadhar_card: number;
-  password: string;
-};
-
-type EmployeeFormFields = {
-  username: string;
-  password: string;
-};
+type LoginFormFields = {
+  username: string
+  password: string
+}
 
 // register form types
 
 type FormFieldNames =
-  | "userName"
-  | "email"
-  | "contactNo"
-  | "password"
-  | "confirm_password"
-  | "orgName"
-  | "address"
-  | "city"
-  | "state"
-  | "pinCode"
-  | "planSelected";
-
+  | 'userName'
+  | 'email'
+  | 'contactNo'
+  | 'password'
+  | 'confirm_password'
+  | 'orgName'
+  | 'address'
+  | 'city'
+  | 'state'
+  | 'pinCode'
+  | 'planSelected'
 
 // exports
 
-export type { PatientFormFields, EmployeeFormFields, FormFieldNames };
+export type { LoginFormFields, FormFieldNames }
