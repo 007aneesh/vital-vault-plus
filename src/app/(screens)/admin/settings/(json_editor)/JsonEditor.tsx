@@ -53,14 +53,13 @@ const default_configurations: any = {
   },
 }
 
-// A simple JSON schema to let the JSONEditor work in “free form” mode.
 const schema = {
   type: 'object',
   title: 'Configuration Editor',
   additionalProperties: true,
 }
 
-export default function SettingsEditor() {
+export default function JsonEditor() {
   const editorContainerRef = useRef(null)
   const editorInstanceRef = useRef<JSONEditor | null>(null)
   const [isChanged, setIsChanged] = useState(false)

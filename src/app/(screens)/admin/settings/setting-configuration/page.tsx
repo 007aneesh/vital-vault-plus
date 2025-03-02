@@ -1,5 +1,10 @@
+'use client'
+
+import dynamic from 'next/dynamic'
 import React from 'react'
-import JsonEditor from '../(json_editor)/json_editor'
+const JsonEditor = dynamic(() => import('../(json_editor)/JsonEditor'), {
+  ssr: false, 
+})
 const SettingConfigurationPage: React.FC = () => {
   return (
     <div>
