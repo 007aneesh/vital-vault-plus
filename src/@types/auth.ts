@@ -1,10 +1,5 @@
 // login form types
-type PatientFormFields = {
-  aadhar_card: number;
-  password: string;
-};
-
-type EmployeeFormFields = {
+type LoginFormFields = {
   username: string;
   password: string;
 };
@@ -27,4 +22,4 @@ type FormFieldNames =
 
 // exports
 
-export type { PatientFormFields, EmployeeFormFields, FormFieldNames };
+export type { LoginFormFields, FormFieldNames };

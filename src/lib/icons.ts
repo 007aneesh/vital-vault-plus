@@ -18,4 +18,6 @@ export {
   IconShieldLock,
   IconShieldCheckFilled,
   IconCloudUp,
+  IconPhone,
+  IconMail,
 } from '@tabler/icons-react'

@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { z } from 'zod'
 import JsonEditor from './(json_editor)/json_editor'
-import RolesTable from './(role_management)/role_management'
+import RolesTable from './role-management/page'
 
 export default function SettingsSidebar() {
   const { activeTab } = useTabContext()

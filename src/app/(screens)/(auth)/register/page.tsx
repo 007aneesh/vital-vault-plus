@@ -5,7 +5,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  useFormField,
 } from '@/components/ui/form'
 import React from 'react'
 import { z } from 'zod'
@@ -75,25 +75,33 @@ const RegisterPage = () => {
   const render_form = () => {
     return (
       <div className='flex flex-col md:grid grid-cols-2  gap-5 md:gap-x-16 items-center w-full justify-center'>
-        {fieldConfigs.map(({ name, label, placeholder, type }) => (
-          <FormField
-            key={name}
-            control={form.control}
-            name={name as FormFieldNames}
-            render={({ field }) => (
-              <>
-                <FormItem>
-                  <FormLabel className='flex items-center justify-between'>
-                    {label}
-                    <FormMessage />
-                  </FormLabel>
-
-                  <Input type={type} placeholder={placeholder} {...field} />
-                </FormItem>
-              </>
-            )}
-          />
-        ))}
+        {fieldConfigs.map(({ name, label, placeholder, type }) => {
+          return (
+            <FormField
+              key={name}
+              control={form.control}
+              name={name as FormFieldNames}
+              render={({ field }) => {
+                const { error } = useFormField()
+                return (
+                  <>
+                    <FormItem>
+                      <FormLabel className='flex items-center justify-between'>
+                        {label}
+                      </FormLabel>
+                      <Input
+                        type={type}
+                        placeholder={placeholder}
+                        {...field}
+                        className={`bg-gray-200 ${error ? 'border-red-500' : ''} outline-none`}
+                      />
+                    </FormItem>
+                  </>
+                )
+              }}
+            />
+          )
+        })}
       </div>
     )
   }

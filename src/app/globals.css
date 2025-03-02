@@ -95,7 +95,7 @@
     background: white;
     border: none !important;
   }
-  
+
   .jsoneditor-tree,
   div.jsoneditor,
   td {
@@ -153,4 +153,8 @@
 .animate-scroll {
   display: flex;
   animation: scroll 30s linear infinite;
+}
+
+div.jsoneditor-outer {
+  height: 500px !important;
 }

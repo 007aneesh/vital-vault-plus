@@ -1,17 +1,7 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-import { FlatCompat } from '@eslint/eslintrc'
 import pluginJs from '@eslint/js'
-import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js'
+import pluginReact from 'eslint-plugin-react'
+import pluginTs from '@typescript-eslint/eslint-plugin'
 import globals from 'globals'
-
-const fileName = fileURLToPath(import.meta.url)
-const dirName = path.dirname(fileName)
-const compat = new FlatCompat({
-  baseDirectory: dirName,
-  recommendedConfig: pluginJs.configs.recommended,
-})
 
 export default [
   {
@@ -24,11 +14,6 @@ export default [
         ...globals.node,
         React: true,
         JSX: true,
-      },
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
       },
     },
     settings: {
@@ -47,9 +32,7 @@ export default [
     },
     ignores: ['tailwind.config.ts', '**/.*'],
   },
-  ...compat.extends('eslint:recommended'),
-  ...compat.extends('plugin:@typescript-eslint/recommended'),
-  ...compat.extends('plugin:react/recommended'),
-  ...compat.extends('next/core-web-vitals'),
-  pluginReactConfig,
+  pluginJs.configs.recommended,
+  pluginReact.configs.recommended,
+  pluginTs.configs.recommended,
 ]

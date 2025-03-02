@@ -118,13 +118,14 @@ const FormMessage = React.forwardRef<
 FormMessage.displayName = 'FormMessage'
 
 // ✅ **Reusable `FormBuilder` Component**
-type FormBuilderProps<T extends FieldValues> = {
+export type FormBuilderProps<T extends FieldValues> = {
   form: any
   fields: {
-    name: FieldPath<T>
-    label: string
+    name: string
+    label?: string
     placeholder?: string
     type?: string
+    required?: boolean
   }[]
   onSubmit: (data: T) => void
   buttonLabel?: string
@@ -138,26 +139,31 @@ const FormBuilder = <T extends FieldValues>({
   buttonLabel = 'Submit',
   loading,
 }: FormBuilderProps<T>) => {
+  const {
+    formState: { errors },
+  } = form
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className='space-y-5 flex flex-col justify-center w-full'
       >
-        {fields.map(({ name, label, placeholder, type = 'text' }) => (
+        {fields.map(({ name, label, placeholder, type = 'text', required }) => (
           <FormField
             key={name}
             control={form.control}
             name={name}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{label}</FormLabel>
+                {label && <FormLabel>{label}</FormLabel>}
                 <FormControl>
                   <Input
                     type={type}
-                    className='bg-gray-200'
+                    className={`bg-gray-200 ${errors[name] ? 'border-red-500' : ''} outline-none`}
                     placeholder={placeholder}
-                    {...field}
+                    value={field.value || ''} 
+                    onChange={field.onChange} 
+                    onBlur={field.onBlur}
                   />
                 </FormControl>
                 <FormMessage />
