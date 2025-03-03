@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProtectedAdminRoute from '@/components/protected/protected-admin'
 import { Sidebar, SidebarBody, SidebarLink } from '@/components/ui/sidebar'
 import {
@@ -15,9 +15,25 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import LogoImg from '@/app/favicon.ico'
+import { useAuthStore } from '@/store/authStore'
+import { useRouter } from 'next/navigation'
+import { ROLES } from '@/configs/constant'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const is_admin = true
+  const { user, isAuthenticated, fetchUser } = useAuthStore()
+  const is_admin = user?.type === ROLES.ORGANISATION;
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login') 
+      return
+    }
+
+    if (!user) {
+      fetchUser() 
+    }
+  }, [isAuthenticated, user])
 
   const baseLinks = [
     {

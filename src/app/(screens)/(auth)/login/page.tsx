@@ -15,22 +15,32 @@ import {
 import { Input } from '@/components/ui/input'
 import { LoginFormFields } from '@/@types/auth'
 import { LoginConfig } from '@/data/FomData'
+import { useAuthStore } from '@/store/authStore'
+import { useRouter } from 'next/navigation'
+import { ROLES } from '@/configs/constant'
 
 const schema = z.object({
-  username: z
-    .string()
-    .min(3, 'Please enter a valid username'),
+  username: z.string().min(3, 'Please enter a valid username'),
   password: z.string().min(8, 'Password must be at least 8 characters'),
 })
 
 const LoginPage = () => {
+  const login = useAuthStore((state) => state.login)
+  const { user } = useAuthStore()
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
   })
 
   async function onSubmit(values: z.infer<typeof schema>) {
     try {
-      console.log('Login successful')
+      await login(values.username, values.password)
+      if (user?.type == ROLES.ORGANISATION || user?.type == ROLES.EMPLOYEE) {
+        router.push('/admin')
+      } else if (user?.type == ROLES.PATIENT) {
+        router.push('/user')
+      }
     } catch (err) {
       console.error('Invalid Credentials')
     }
