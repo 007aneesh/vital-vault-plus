@@ -5,16 +5,17 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 const ProtectedAdminRoute = ({ children }: any) => {
-  const { isAuthenticated, fetchUser } = useAuthStore()
+  const { isAuthenticated, fetchUser, user } = useAuthStore()
   const router = useRouter()
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/login') 
-    } else {
+      router.push('/login')
+      return
+    } else if (!user) {
       fetchUser()
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, user])
 
   return isAuthenticated ? <>{children}</> : null
 }

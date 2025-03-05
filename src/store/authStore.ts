@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { ENDPOINTS } from '@/configs/constant'
+import { AUTH_ENDPOINTS } from '@/configs/constant'
 import axios from '@/lib/axios'
 
 interface AuthState {
@@ -21,7 +21,10 @@ export const useAuthStore = create<AuthState>()(
 
       login: async (username: string, password: string) => {
         try {
-          const res = await axios.post(ENDPOINTS.LOGIN, { username, password })
+          const res = await axios.post(AUTH_ENDPOINTS.LOGIN, {
+            username,
+            password,
+          })
 
           set(() => ({
             accessToken: res?.data?.data,
@@ -29,14 +32,14 @@ export const useAuthStore = create<AuthState>()(
 
           await get().fetchUser()
         } catch (error) {
-          console.error('❌ Login failed:', error)
+          console.error('Login failed:', error)
           throw error
         }
       },
 
       fetchUser: async () => {
         try {
-          const res = await axios.get(ENDPOINTS.ME, {
+          const res = await axios.get(AUTH_ENDPOINTS.ME, {
             headers: { Authorization: `Bearer ${get().accessToken}` },
           })
 
@@ -45,7 +48,7 @@ export const useAuthStore = create<AuthState>()(
             isAuthenticated: true,
           }))
         } catch (error) {
-          console.error('❌ Failed to fetch user:', error)
+          console.error('Failed to fetch user:', error)
           get().logout()
         }
       },

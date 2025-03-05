@@ -27,13 +27,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!isAuthenticated) {
       router.push('/login') 
-      return
+      return;
     }
-
-    if (!user) {
+    else if (!user) {
       fetchUser() 
     }
-  }, [isAuthenticated, user])
+  }, [user, isAuthenticated])
 
   const baseLinks = [
     {

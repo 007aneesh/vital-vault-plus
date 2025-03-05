@@ -217,7 +217,7 @@ export function DataTable<TData, TValue>({
                     ...getCommonPinningStyles(cell.column, 'cell', index),
                   }}
                 >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  {cell.getValue() ? flexRender(cell.column.columnDef.cell, cell.getContext()) : "No Data"}
                 </TableCell>
               ))}
             </TableRow>
