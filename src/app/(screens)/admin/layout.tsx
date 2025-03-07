@@ -15,9 +15,13 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import LogoImg from '@/app/favicon.ico'
+import { useAuthStore } from '@/store/authStore'
+import { ROLES } from '@/configs/constant'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const is_admin = true
+  const { user } = useAuthStore()
+  const is_admin = user?.type === ROLES.ORGANISATION;
+  
 
   const baseLinks = [
     {

@@ -3,7 +3,6 @@
 import { columns } from './columns'
 import { DataTable } from '@/components/ui/data-table'
 import React, { useEffect, useState } from 'react'
-import { makeData } from '@/lib/personerender'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,9 +12,12 @@ import {
 } from '@/components/ui/breadcrumb'
 import _ from 'lodash'
 import { useRouter } from 'next/navigation'
+import { useToastStore } from '@/store/toastStore'
+import { employee_management } from '@/configs/employee'
 
 export default function Page() {
   const [data, setData] = useState<any>([])
+  const showToast = useToastStore((state) => state.setShowToast)
   const router = useRouter()
 
   const breadcrumb_list = [
@@ -28,16 +30,27 @@ export default function Page() {
     },
   ]
 
-  async function getData() {
-    setData(makeData(50))
-  }
-
   const handleRowClick = (data: any) => {
     router.push(`/admin/employee/${data.id}`)
   }
 
   useEffect(() => {
-    getData()
+    const getEmployeesData = async () => {
+      try {
+        const response = await employee_management.getAllEmployees()
+        setData(response?.data)
+        showToast({
+          message: 'Success',
+          type: 'success',
+        })
+      } catch (error) {
+        showToast({
+          message: 'Error fetching data',
+          type: 'error',
+        })
+      }
+    }
+    if(_.isEmpty(data)) getEmployeesData()
   }, [])
 
   return (

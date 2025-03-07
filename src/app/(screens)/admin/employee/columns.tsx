@@ -2,12 +2,11 @@
 
 import { Person } from '@/@types/tableData'
 import { ColumnDef } from '@tanstack/react-table'
-import React from 'react'
 
 export const columns: ColumnDef<Person, any>[] = [
   {
-    accessorKey: 'employee_id',
-    id: 'employee_id',
+    accessorKey: 'id',
+    id: 'id',
     header: () => 'Employee Id',
     meta: {
       filterVariant: 'text',
@@ -16,8 +15,8 @@ export const columns: ColumnDef<Person, any>[] = [
     enablePinning: true,
   },
   {
-    accessorKey: 'firstName',
-    id: 'firstName',
+    accessorKey: 'first_name',
+    id: 'first_name',
     header: 'First Name',
     cell: (info) => info.getValue(),
     meta: {
@@ -25,18 +24,18 @@ export const columns: ColumnDef<Person, any>[] = [
     },
   },
   {
-    accessorFn: (row) => row.lastName,
-    id: 'lastName',
+    accessorKey: 'last_name',
+    id: 'last_name',
     cell: (info) => info.getValue(),
-    header: () => <span>Last Name</span>,
+    header: 'Last Name',
     meta: {
       filterVariant: 'text',
     },
   },
   {
-    accessorKey: 'role',
-    id: 'role',
-    header: () => 'Role',
+    accessorKey: 'access_level',
+    id: 'access_level',
+    header: () => 'Access Level',
     meta: {
       filterVariant: 'text',
     },
@@ -50,16 +49,16 @@ export const columns: ColumnDef<Person, any>[] = [
     },
   },
   {
-    accessorKey: 'contact',
-    id: 'contact',
+    accessorKey: 'contact_number',
+    id: 'contact_number',
     header: () => 'Contact Number',
     meta: {
       filterVariant: 'text',
     },
   },
   {
-    accessorKey: 'aadhar',
-    id: 'aadhar',
+    accessorKey: 'aadhar_number',
+    id: 'aadhar_number',
     header: () => 'Aadhar Number',
     meta: {
       filterVariant: 'text',
