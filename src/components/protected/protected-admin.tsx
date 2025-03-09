@@ -12,21 +12,15 @@ const ProtectedAdminRoute = ({ children }: any) => {
 
   useEffect(() => {
     const checkAuth = async () => {
+      await fetchUser()
       if (!isAuthenticated) {
         router.push('/login')
-      } else if (!user) {
-        try {
-          await fetchUser()
-        } finally {
-          setLoading(false)
-        }
       } else {
-        setLoading(false)  
+        setLoading(false)
       }
     }
-
     checkAuth()
-  }, [isAuthenticated, user, router, fetchUser])
+  }, [isAuthenticated, user, router])
 
   if (loading) {
     return <Loading />
