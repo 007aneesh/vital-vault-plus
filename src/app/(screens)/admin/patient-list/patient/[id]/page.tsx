@@ -11,26 +11,53 @@ import Image from 'next/image'
 import { columns } from './columns'
 import { useEffect, useState } from 'react'
 import { get_patient_data } from '@/lib/patientrender'
+import { useToastStore } from '@/store/toastStore'
+import { patient_management } from '@/configs/patient'
+import { ImageLinks } from '@/lib/imageLinks'
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params
+  const showToast = useToastStore((state) => state.setShowToast)
 
   const [data, setData] = useState<any>([])
+
+  useEffect(() => {
+    const getEmployee = async () => {
+      try {
+        const response = await patient_management.getPatientById(id)
+        setData(response?.data)
+        showToast({
+          message: 'Success',
+          type: 'success',
+        })
+      } catch (error) {
+        console.error('Error fetching employee:', error)
+        showToast({
+          message: 'Error fetching data',
+          type: 'error',
+        })
+      }
+    }
+    getEmployee()
+  }, [])
 
   useEffect(() => {
     const response = get_patient_data()
     setData(response)
   }, [])
-  console.log('patient_data:', id, data)
 
   const handle_render_patient_profile = (payload: any) => {
     return (
       <div className='flex flex-col md:flex-row items-center md:items-start gap-6 border p-4 rounded-lg mb-6 shadow-sm bg-white'>
-        <Image
-          src=''
-          alt='Patient'
-          className='w-28 h-28 rounded-full object-cover border'
-        />
+        <div className='h-28 w-28 rounded-full shadow-lg'>
+          <Image
+            src={data?.image || ImageLinks.user_profile}
+            alt='Profile'
+            width={1080}
+            height={1080}
+            className='w-full h-full object-cover'
+          />
+        </div>
         <div>
           <h2 className='text-2xl font-bold'>
             {`${payload?.first_name} ${payload?.last_name}`}
@@ -104,22 +131,27 @@ const Page = ({ params }: { params: { id: string } }) => {
       <div className='border p-4 rounded-lg mb-6 shadow-sm bg-white'>
         <h2 className='text-xl font-bold mb-2'>Medical History</h2>
         <div>
-          <strong>Chronic Diseases:</strong> {data.chronic_diseases.join(', ')}
+          <strong>Chronic Diseases:</strong>{' '}
+          {!_.isEmpty(data?.chronic_diseases)
+            ? data?.chronic_diseases.join(', ')
+            : '--'}
         </div>
         <div>
           <strong>Diabetes Emergencies:</strong>{' '}
-          {data.diabetes_emergencies.join(', ')}
+          {!_.isEmpty(data?.diabetes_emergencies)
+            ? data?.diabetes_emergencies?.join(', ')
+            : '--'}
         </div>
         <div>
           <strong>Surgeries:</strong>{' '}
           {!_.isEmpty(data?.surgeries) ? data.surgeries.join(', ') : '--'}
         </div>
         <div>
-          <strong>Family Diseases:</strong> {data.family_diseases.join(', ')}
+          <strong>Family Diseases:</strong> {data?.family_diseases?.join(', ')}
         </div>
         <div>
           <strong>Diabetes Complications:</strong>{' '}
-          {data.diabetes_complications.join(', ')}
+          {data?.diabetes_complications?.join(', ')}
         </div>
       </div>
     )
@@ -140,10 +172,11 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <div className='py-5'>
-      {handle_render_patient_profile(data?.personal_info)}
+      {handle_render_patient_profile(data)}
       <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-        {handle_render_timeline(data?.visit_history)}
-        {handle_render_medical_history({ data: medical_history_config })}
+        {!_.isEmpty(data?.visits) && handle_render_timeline(data?.visits)}
+        {!_.isEmpty(data?.medical_history) &&
+          handle_render_medical_history({ data: data?.medical_history })}
       </div>
       {handle_render_medications({ data: medications_config })}
     </div>

@@ -1,24 +1,29 @@
 import React from 'react'
 import _ from 'lodash'
 import Image from 'next/image'
+import { ImageLinks } from '@/lib/imageLinks'
 
 const EmployeePage = ({ data }: any) => {
   return (
     <div className='min-h-screen p-4 sm:p-6'>
       <div className='max-w-6xl mx-auto bg-white rounded-lg shadow-lg p-6 sm:p-8'>
-        <div className='flex flex-col md:flex-row items-start mb-8 gap-10'>
-          <div>
+        <div className='flex flex-row items-start mb-8 gap-5 md:gap-10'>
+          <div className='h-28 w-28 rounded-full shadow-lg'>
             <Image
-              src={data?.image || ''}
+              src={data?.image || ImageLinks.user_profile}
               alt='Profile'
-              className='w-20 h-20 md:w-32 md:h-32 rounded-full object-cover shadow-lg mt-4 md:mt-0'
+              width={1080}
+              height={1080}
+              className='w-full h-full object-cover'
             />
           </div>
           <div className='flex flex-col'>
-            <h1 className='text-2xl sm:text-3xl font-bold text-gray-800'>
+            <h1 className='text-lg md:text-2xl sm:text-3xl font-bold text-gray-800'>
               {data?.first_name} {data?.last_name}
             </h1>
-            <p className='text-gray-600 mt-2'>Hospital Employee Profile</p>
+            <p className='text-sm md:text-base text-gray-600 mt-2'>
+              Hospital Employee Profile
+            </p>
           </div>
         </div>
 
@@ -114,7 +119,7 @@ const EmployeePage = ({ data }: any) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.shift_details.map((shift, index) => (
+                    {data.shift_details.map((shift: any, index: any) => (
                       <tr
                         key={index}
                         className='border-b border-gray-200 hover:bg-gray-50'
@@ -179,7 +184,7 @@ const EmployeePage = ({ data }: any) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.work_history.map((work, index) => (
+                    {data.work_history.map((work: any, index: any) => (
                       <tr
                         key={index}
                         className='border-b border-gray-200 hover:bg-gray-50'
@@ -206,16 +211,14 @@ const EmployeePage = ({ data }: any) => {
   )
 }
 
-// Reusable Section Component
-const Section = ({ title, children }) => (
+const Section = ({ title, children }: any) => (
   <div className='bg-gray-50 p-4 rounded-lg shadow-sm'>
     <h2 className='text-xl font-semibold text-gray-700 mb-4'>{title}</h2>
     <div className='space-y-2'>{children}</div>
   </div>
 )
 
-// Reusable Detail Item Component
-const DetailItem = ({ label, value }) => (
+const DetailItem = ({ label, value }: any) => (
   <div className='flex justify-between items-center border-b border-gray-200 py-2'>
     <span className='text-gray-600'>{label}</span>
     <span className='text-gray-800'>{value || 'N/A'}</span>

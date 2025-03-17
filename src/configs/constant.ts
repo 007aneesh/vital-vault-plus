@@ -8,6 +8,7 @@ export const AUTH_ENDPOINTS = {
 
 export const ADMIN_ENDPOINTS = {
   EMPLOYEE: '/employee',
+  PATIENT: '/patient',
 }
 
 export const ROLES = {
