@@ -2,10 +2,14 @@
   "name": "vital-vault-plus",
   "version": "0.1.0",
   "private": true,
+  "main": "electron/main.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "next-build": "next build",
+    "electron": "electron .",
+    "start": "concurrently \"npm run next-build && npm run server\" \"npm run electron\"",
+    "server": "next start",
+    "build": "npm run next-build && electron-builder",
     "lint": "next lint",
     "prepare": "husky install"
   },
@@ -50,6 +54,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@electron/remote": "^2.1.2",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@faker-js/faker": "^9.2.0",
@@ -60,6 +65,9 @@
     "@types/uuid": "^10.0.0",
     "@types/whatwg-url": "^13.0.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "concurrently": "^9.1.2",
+    "electron": "^34.0.2",
+    "electron-builder": "^25.1.8",
     "eslint": "^8.57.1",
     "eslint-config-next": "14.2.11",
     "eslint-config-prettier": "^9.1.0",

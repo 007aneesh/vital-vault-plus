@@ -10,8 +10,7 @@ import {
   IconSettings,
   IconUserBolt,
 } from '@/lib/icons'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { Logo, LogoIcon } from '@/components/ui/logo'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import LogoImg from '@/app/favicon.ico'
@@ -78,7 +77,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Sidebar open={open} setOpen={setOpen}>
           <SidebarBody className='justify-between gap-10 black-gradient'>
             <div className='flex flex-col flex-1 overflow-y-auto overflow-x-hidden'>
-              {open ? <Logo /> : <LogoIcon />}
+              {open ? (
+                <Logo is_admin={is_admin} logo={LogoImg.src} />
+              ) : (
+                <LogoIcon logo={LogoImg.src} />
+              )}
               <div className='mt-8 flex flex-col gap-2'>
                 {links.map((link, idx) => (
                   <SidebarLink key={idx} link={link} />
@@ -109,36 +112,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
     </ProtectedAdminRoute>
-  )
-}
-
-export const Logo = (data: any) => {
-  const { is_admin, name, logo } = data
-  return (
-    <Link
-      href='/admin'
-      className='font-normal flex space-x-2 items-center text-sm text-white py-1 relative z-20'
-    >
-      <Image src={logo} alt='' className='h-6 w-6 rounded-sm ' />
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className='font-medium text-white whitespace-pre'
-      >
-        {name ? name : 'PGI Chandigarh'} | {is_admin ? 'Admin' : 'Employee'}
-      </motion.span>
-    </Link>
-  )
-}
-
-export const LogoIcon = (data?: any) => {
-  const { logo } = data
-  return (
-    <Link
-      href='/admin'
-      className='font-normal flex space-x-2 items-center text-sm text-white py-1 relative z-20'
-    >
-      <Image src={logo} alt='' className='h-6 w-6 rounded-sm' />
-    </Link>
   )
 }
