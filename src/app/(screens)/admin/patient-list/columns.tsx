@@ -2,13 +2,12 @@
 
 import { Person } from '@/@types/tableData'
 import { ColumnDef } from '@tanstack/react-table'
-import React from 'react'
 
 export const columns: ColumnDef<Person, any>[] = [
   {
-    accessorKey: 'aadhar',
-    id: 'aadhar',
-    header: () => 'Aadhar Number',
+    accessorKey: 'id',
+    id: 'id',
+    header: () => 'Patient Id',
     meta: {
       filterVariant: 'text',
       pinned: 'left',
@@ -16,8 +15,8 @@ export const columns: ColumnDef<Person, any>[] = [
     enablePinning: true,
   },
   {
-    accessorKey: 'firstName',
-    id: 'firstName',
+    accessorKey: 'first_name',
+    id: 'first_name',
     header: 'First Name',
     cell: (info) => info.getValue(),
     meta: {
@@ -25,18 +24,10 @@ export const columns: ColumnDef<Person, any>[] = [
     },
   },
   {
-    accessorFn: (row) => row.lastName,
-    id: 'lastName',
+    accessorKey: 'last_name',
+    id: 'last_name',
     cell: (info) => info.getValue(),
-    header: () => <span>Last Name</span>,
-    meta: {
-      filterVariant: 'text',
-    },
-  },
-  {
-    accessorKey: 'role',
-    id: 'role',
-    header: () => 'Role',
+    header: 'Last Name',
     meta: {
       filterVariant: 'text',
     },
@@ -50,9 +41,17 @@ export const columns: ColumnDef<Person, any>[] = [
     },
   },
   {
-    accessorKey: 'contact',
-    id: 'contact',
+    accessorKey: 'contact_number',
+    id: 'contact_number',
     header: () => 'Contact Number',
+    meta: {
+      filterVariant: 'text',
+    },
+  },
+  {
+    accessorKey: 'aadhar_number',
+    id: 'aadhar_number',
+    header: () => 'Aadhar Number',
     meta: {
       filterVariant: 'text',
     },
@@ -69,22 +68,6 @@ export const columns: ColumnDef<Person, any>[] = [
     accessorKey: 'gender',
     id: 'gender',
     header: () => 'Gender',
-    meta: {
-      filterVariant: 'select',
-    },
-  },
-  {
-    accessorKey: 'lastVisit',
-    id: 'lastVisit',
-    header: 'Last Visit',
-    meta: {
-      filterVariant: 'text',
-    },
-  },
-  {
-    accessorKey: 'status',
-    id: 'status',
-    header: 'Status',
     meta: {
       filterVariant: 'select',
     },

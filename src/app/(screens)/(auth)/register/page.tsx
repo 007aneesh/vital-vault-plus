@@ -15,7 +15,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { FormFieldNames } from '@/@types/auth'
 import { registerFieldConfigs as fieldConfigs } from '@/data/FomData'
-import { registerUser } from '@/actions/auth'
 import { redirect } from 'next/navigation'
 
 const getDefaultValues = () => ({
@@ -64,8 +63,7 @@ const RegisterPage = () => {
       const data = {
         ...payload,
       }
-      const response = registerUser(data)
-      console.log(response)
+      console.log(data)
       redirect('/admin')
     } catch (error) {
       console.log(error)

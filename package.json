@@ -28,10 +28,9 @@
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
-    "@reduxjs/toolkit": "^2.4.0",
     "@tabler/icons-react": "^3.22.0",
     "@tanstack/react-table": "^8.20.5",
-    "axios": "^1.7.7",
+    "axios": "^1.8.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.5.5",
@@ -45,13 +44,14 @@
     "react-dom": "^18",
     "react-dropzone": "^14.3.5",
     "react-hook-form": "^7.54.2",
-    "react-redux": "^9.1.2",
     "sharp": "^0.33.5",
+    "swr": "^2.3.2",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^10.0.0",
     "vaul": "^1.1.1",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@electron/remote": "^2.1.2",

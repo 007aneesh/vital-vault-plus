@@ -1,10 +1,8 @@
 'use client'
-// import { PatientList } from "@/@types/tableData";
 
 import { columns } from './columns'
 import { DataTable } from '@/components/ui/data-table'
 import React, { useEffect, useState } from 'react'
-import { makeData } from '@/lib/personerender'
 import AddPatient from '@/components/sections/addPatient'
 import {
   Drawer,
@@ -25,8 +23,11 @@ import _ from 'lodash'
 import { Button } from '@/components/ui/button'
 import { IconX } from '@/lib/icons'
 import { useRouter } from 'next/navigation'
+import { patient_management } from '@/configs/patient'
+import { useToastStore } from '@/store/toastStore'
 
 export default function Page() {
+   const showToast = useToastStore((state) => state.setShowToast)
   const [data, setData] = useState<any>([])
   const router = useRouter()
 
@@ -40,17 +41,28 @@ export default function Page() {
     },
   ]
 
-  async function getData() {
-    setData(makeData(50))
-  }
-
   const handleRowClick = (data: any) => {
     router.push(`/admin/patient-list/patient/${data.id}`)
   }
 
   useEffect(() => {
-    getData()
-  }, [])
+      const getEmployeesData = async () => {
+        try {
+          const response = await patient_management.getAllPatients()
+          setData(response?.data)
+          showToast({
+            message: 'Success',
+            type: 'success',
+          })
+        } catch (error) {
+          showToast({
+            message: 'Error fetching data',
+            type: 'error',
+          })
+        }
+      }
+      if(_.isEmpty(data)) getEmployeesData()
+    }, [])
 
   return (
     <div>
