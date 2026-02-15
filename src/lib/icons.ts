@@ -20,4 +20,5 @@ export {
   IconCloudUp,
   IconPhone,
   IconMail,
+  IconCheck,
 } from '@tabler/icons-react'

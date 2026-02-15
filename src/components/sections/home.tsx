@@ -6,14 +6,18 @@ import {
   IconShieldCheckFilled,
   IconShieldLock,
 } from '@/lib/icons'
-import React from 'react'
+import React, { useRef } from 'react'
 import Image from 'next/image'
 import { Grid } from '../ui/grid'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import { Card } from '../ui/card'
+import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 
 function Demo() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+
   const steps = [
     {
       step: 1,
@@ -44,38 +48,69 @@ function Demo() {
   ]
 
   return (
-    <div className='relative py-16 bg-dashboard px-8'>
-      <div className='text-center max-w-2xl mx-auto mb-8'>
-        <h2 className='text-xl md:text-4xl font-bold'>Book a Demo with us</h2>
-        <p className='text-primary text-sm md:text-base mt-4 relative inline-block'>
+    <div ref={ref} className='relative py-16 bg-dashboard px-8 overflow-hidden'>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+        className='text-center max-w-2xl mx-auto mb-12'
+      >
+        <motion.h2
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className='text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
+        >
+          Book a Demo with us
+        </motion.h2>
+        <p className='text-primary text-sm md:text-base mt-6 relative inline-block'>
           <span className='absolute inset-x-0 top-1/2 transform -translate-y-1/2 border-b-2 border-primary w-full sm:w-[120%] md:w-[130%] lg:w-[150%] sm:left-[-15%] md:left-[-25%]'></span>
           <span className='relative z-10 bg-dashboard px-2'>
             How Demo Works
           </span>
         </p>
-      </div>
+      </motion.div>
 
       <Grid
         data={steps}
         sort_by='priority'
         container_styles='[&]:gap-8 [&]:md:grid-cols-2 [&]:lg:grid-cols-4'
         item_styles='flex flex-col items-center'
-        item_renderer={(item) => (
-          <>
-            <div className='w-36 h-36 flex items-center justify-center'>
-              <Image
-                src={item.image}
-                width={2000}
-                height={2000}
-                alt={`item-image-${item?.step}`}
-                className='w-36 h-28'
-              />
-            </div>
-            <h3 className='text-lg font-semibold mb-3'>{item.title}</h3>
-            <p className='text-sm text-gray-700 text-center'>
-              {item.description}
-            </p>
-          </>
+        item_renderer={(item, index) => (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 * (index || 0) }}
+            className='relative'
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, y: -10 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+              className='flex flex-col items-center'
+            >
+              <div className='relative w-36 h-36 flex items-center justify-center mb-4'>
+                <motion.div
+                  className='absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full'
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+                <Image
+                  src={item.image}
+                  width={2000}
+                  height={2000}
+                  alt={`item-image-${item?.step}`}
+                  className='relative w-32 h-28 z-10'
+                />
+              </div>
+              <div className='absolute -top-2 -right-2 w-8 h-8 bg-secondary text-white rounded-full flex items-center justify-center font-bold shadow-lg'>
+                {item.step}
+              </div>
+              <h3 className='text-lg font-semibold mb-3'>{item.title}</h3>
+              <p className='text-sm text-gray-700 text-center'>
+                {item.description}
+              </p>
+            </motion.div>
+          </motion.div>
         )}
       />
     </div>
@@ -83,6 +118,9 @@ function Demo() {
 }
 
 function Features() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-100px' })
+
   const features = [
     {
       title: 'Centralized Data Storage',
@@ -123,35 +161,70 @@ function Features() {
   ]
 
   return (
-    <div className='py-10 px-8 md:py-20 bg-dashboard text-center'>
-      <div className='text-center max-w-2xl mx-auto mb-8'>
-        <h2 className='text-xl md:text-4xl font-bold'>Features</h2>
-        <p className='text-primary text-sm md:text-base mt-4 relative inline-block'>
+    <div ref={ref} className='py-16 px-8 md:py-24 bg-dashboard text-center overflow-hidden'>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+        className='text-center max-w-2xl mx-auto mb-12'
+      >
+        <motion.h2
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className='text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
+        >
+          Features
+        </motion.h2>
+        <p className='text-primary text-sm md:text-base mt-6 relative inline-block'>
           <span className='absolute inset-x-0 top-1/2 transform -translate-y-1/2 border-b-2 border-primary w-full sm:w-[120%] md:w-[130%] lg:w-[150%] sm:left-[-15%] md:left-[-25%]'></span>
           <span className='relative z-10 bg-dashboard px-2'>
             What We Provide
           </span>
         </p>
-      </div>
+      </motion.div>
+
       <Grid
         data={features}
         sort_by='priority'
         container_styles='[&]:gap-8 [&]:md:grid-cols-2 [&]:lg:grid-cols-3'
-        item_styles='flex flex-col items-center'
-        item_renderer={(feature) => (
-          <>
-            <div className='flex flex-col items-center text-center flex-grow'>
-              <Image
-                src={feature?.image}
-                alt={feature?.title}
-                className='w-24 h-24 bg-cover mb-4 mx-auto'
-                width={24}
-                height={24}
+        item_styles='flex flex-col items-center h-full'
+        item_renderer={(feature, index) => (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 * (index || 0) }}
+            className='h-full'
+          >
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+              className='flex flex-col items-center text-center h-full p-6 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow relative overflow-hidden group'
+            >
+              <motion.div
+                className='absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
               />
-              <h3 className='font-semibold text-xl mb-2'>{feature?.title}</h3>
-              <p className='text-gray-600'>{feature.description}</p>
-            </div>
-          </>
+              <motion.div
+                whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                transition={{ duration: 0.5 }}
+                className='relative z-10'
+              >
+                <Image
+                  src={feature?.image}
+                  alt={feature?.title}
+                  className='w-24 h-24 bg-cover mb-6 mx-auto'
+                  width={96}
+                  height={96}
+                />
+              </motion.div>
+              <h3 className='font-semibold text-xl mb-4 relative z-10'>
+                {feature?.title}
+              </h3>
+              <p className='text-gray-600 relative z-10 flex-grow'>
+                {feature.description}
+              </p>
+            </motion.div>
+          </motion.div>
         )}
       />
     </div>
@@ -159,6 +232,9 @@ function Features() {
 }
 
 function TestimonialsSection() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true })
+
   const testimonials = [
     {
       name: 'Dr. Sarah Chen',
@@ -181,37 +257,75 @@ function TestimonialsSection() {
   ]
 
   return (
-    <div className='py-10 md:py-20 bg-popover text-center'>
-      <h2 className='heading text-2xl md:text-3xl'>Testimonials</h2>
-      <p className='text-primary text-sm md:text-base mt-4 relative inline-block'>
-        <span className='absolute inset-x-0 top-1/2 transform -translate-y-1/2 border-b-2 border-primary w-full sm:w-[120%] md:w-[130%] lg:w-[150%] sm:left-[-15%] md:left-[-20%]'></span>
-        <span className='relative z-10 bg-popover px-2'>
-          What people say about us
-        </span>
-      </p>
-      <div className='overflow-x-auto mt-8 scrollbar-hidden'>
+    <div ref={ref} className='py-16 md:py-24 bg-popover text-center overflow-hidden'>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6 }}
+      >
+        <motion.h2
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className='text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
+        >
+          Testimonials
+        </motion.h2>
+        <p className='text-primary text-sm md:text-base mt-6 relative inline-block'>
+          <span className='absolute inset-x-0 top-1/2 transform -translate-y-1/2 border-b-2 border-primary w-full sm:w-[120%] md:w-[130%] lg:w-[150%] sm:left-[-15%] md:left-[-20%]'></span>
+          <span className='relative z-10 bg-popover px-2'>
+            What people say about us
+          </span>
+        </p>
+      </motion.div>
+
+      <div className='overflow-x-auto mt-12 scrollbar-hidden'>
         <div className='flex space-x-6 md:space-x-8 flex-nowrap p-10 mr-10 md:justify-center'>
           {testimonials.map((testimonial, idx) => (
-            <Card
+            <motion.div
               key={idx}
-              className='w-80 min-w-[300px] flex-shrink-0 shadow-xl'
+              initial={{ opacity: 0, x: 50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 * idx }}
+              whileHover={{ y: -10 }}
             >
-              <div className='flex flex-col items-center text-center '>
-                <Image
-                  src={testimonial?.imageUrl}
-                  alt={testimonial?.name}
-                  className='w-24 h-24 rounded-full object-cover'
-                  width={2000}
-                  height={2000}
-                />
-                <h3 className='font-semibold text-lg mt-1'>
-                  {testimonial?.name}
-                </h3>
-                <p className='text-sm text-muted-foreground mt-3'>
-                  {testimonial?.statement}
-                </p>
-              </div>
-            </Card>
+              <Card className='w-80 min-w-[300px] flex-shrink-0 shadow-xl hover:shadow-2xl transition-shadow bg-white'>
+                <div className='flex flex-col items-center text-center relative'>
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    <Image
+                      src={testimonial?.imageUrl}
+                      alt={testimonial?.name}
+                      className='w-24 h-24 rounded-full object-cover border-4 border-secondary shadow-lg'
+                      width={96}
+                      height={96}
+                    />
+                  </motion.div>
+                  <h3 className='font-semibold text-lg mt-4'>
+                    {testimonial?.name}
+                  </h3>
+                  <div className='flex gap-1 my-3'>
+                    {[...Array(5)].map((_, i) => (
+                      <motion.svg
+                        key={i}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ delay: 0.3 + i * 0.1 }}
+                        className='w-5 h-5 fill-yellow-400'
+                        viewBox='0 0 20 20'
+                      >
+                        <path d='M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z' />
+                      </motion.svg>
+                    ))}
+                  </div>
+                  <p className='text-sm text-muted-foreground mt-3 italic'>
+                    &ldquo;{testimonial?.statement}&rdquo;
+                  </p>
+                </div>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -221,6 +335,14 @@ function TestimonialsSection() {
 
 function Home() {
   const router = useRouter()
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end start'],
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
 
   const support = [
     {
@@ -245,63 +367,190 @@ function Home() {
     },
   ]
 
+  const stats = [
+    { value: '10K+', label: 'Active Users' },
+    { value: '99.9%', label: 'Uptime' },
+    { value: '500K+', label: 'Records Managed' },
+    { value: '24/7', label: 'Support' },
+  ]
+
   return (
     <>
-      <div className='min-h-[50vh] md:min-h-[60vh] lg:min-h-screen bg-popover px-5 md:px-16 relative'>
-        <div className='flex h-full items-center justify-center md:justify-start pt-28 md:pt-36 md:max-w-[400px] lg:max-w-[800px]'>
+      <div
+        ref={ref}
+        className='min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 px-5 md:px-16 relative overflow-hidden'
+      >
+        <motion.div
+          className='absolute inset-0 opacity-30'
+          style={{
+            backgroundImage: `radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                             radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.1) 0%, transparent 50%)`,
+          }}
+        />
+
+        <motion.div
+          style={{ y, opacity }}
+          className='flex h-full items-center justify-center md:justify-start pt-32 md:pt-44 md:max-w-[500px] lg:max-w-[900px] relative z-10'
+        >
           <div className='flex items-center md:items-start flex-col w-full'>
-            <Image
-              src={ImageLinks?.temp?.mobile_landing}
-              width={200}
-              height={200}
-              alt='mobile_landing_image'
-              className='pointer-events-none select-none md:hidden mb-10'
-            />
-            <h1 className='text-xl text-center md:text-left md:text-2xl lg:text-6xl text-primary font-extrabold'>
-              Empowering Healthcare Through Smarter Data Management
-            </h1>
-            <p className='text-base text-center md:text-left text-gray-500 mt-5'>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className='md:hidden mb-10'
+            >
+              <Image
+                src={ImageLinks?.temp?.mobile_landing}
+                width={200}
+                height={200}
+                alt='mobile_landing_image'
+                className='pointer-events-none select-none drop-shadow-2xl'
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className='inline-block mb-6'
+            >
+              <motion.span
+                className='px-4 py-2 bg-secondary/10 text-secondary rounded-full text-sm font-semibold inline-flex items-center gap-2'
+                whileHover={{ scale: 1.05 }}
+              >
+                <span className='w-2 h-2 bg-secondary rounded-full animate-pulse' />
+                Trusted by 10,000+ Healthcare Professionals
+              </motion.span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className='text-3xl text-center md:text-left md:text-4xl lg:text-7xl text-primary font-extrabold leading-tight'
+            >
+              Empowering Healthcare Through{' '}
+              <span className='bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent'>
+                Smarter Data Management
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className='text-lg text-center md:text-left text-gray-600 mt-6 max-w-2xl'
+            >
               Say goodbye to data chaos. Our smart, secure platform puts you in
               control of patient care with precision and ease.
-            </p>
-            <Card className='pointer-events-none select-none my-5 w-full shadow-2xl'>
-              <div className='grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-x-0 lg:divide-y-0 divide-border'>
-                {support.map((item) => (
-                  <div
-                    key={item.id}
-                    className='flex flex-col items-center gap-2 p-4'
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className='w-full'
+            >
+              <Card className='pointer-events-none select-none my-8 w-full shadow-2xl backdrop-blur-sm bg-white/90 border-2 border-secondary/20'>
+                <div className='grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-x-0 lg:divide-y-0 divide-border'>
+                  {support.map((item, index) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                      whileHover={{ scale: 1.05 }}
+                      className='flex flex-col items-center gap-3 p-6 cursor-default'
+                    >
+                      <motion.div
+                        className='text-secondary'
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        {item.icon}
+                      </motion.div>
+                      <span className='text-center text-sm font-medium'>
+                        {item.title}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className='flex flex-col sm:flex-row gap-5 items-center mt-4 mb-16'
+            >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant='secondary'
+                  className='md:text-lg py-6 px-8 shadow-lg hover:shadow-xl transition-all'
+                  onClick={() => router.push('/login')}
+                >
+                  Get Started
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  variant='ghost'
+                  onClick={() => router.push('/book-a-demo')}
+                  className='md:text-lg py-6 px-8'
+                >
+                  Book a Demo
+                </Button>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1 }}
+              className='grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-16'
+            >
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1 + index * 0.1 }}
+                  className='text-center'
+                >
+                  <motion.h3
+                    className='text-3xl md:text-4xl font-bold text-secondary'
+                    whileHover={{ scale: 1.1 }}
                   >
-                    {item.icon}
-                    <span className='text-center'>{item.title}</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-            <div className='flex flex-row gap-5 items-center mt-2 mb-16'>
-              <Button
-                variant='ghost'
-                onClick={() => {}}
-                className=' md:text-lg py-5 '
-              >
-                Book a demo!
-              </Button>
-              <Button
-                variant='secondary'
-                className=' md:text-lg py-5 '
-                onClick={() => router.push('/login')}
-              >
-                Get Started!
-              </Button>
-            </div>
+                    {stat.value}
+                  </motion.h3>
+                  <p className='text-sm text-gray-600 mt-2'>{stat.label}</p>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
-        </div>
-        <div className='absolute bottom-0 right-0 hidden md:flex items-end justify-end'>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className='absolute bottom-0 right-0 hidden md:flex items-end justify-end'
+        >
           <div className='relative flex justify-center items-center'>
-            <div
+            <motion.div
+              animate={{
+                scale: [1, 1.05, 1],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
               className='relative md:w-[380px] lg:w-[550px] rounded-full'
               style={{
                 backgroundImage:
-                  'radial-gradient(circle, rgba(59, 130, 246, 0.7), transparent 70%)',
+                  'radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent 70%)',
               }}
             >
               <Image
@@ -309,12 +558,13 @@ function Home() {
                 width={550}
                 height={550}
                 alt='doc_landing_image'
-                className='pointer-events-none select-none md:w-[380px] lg:w-[550px]'
+                className='pointer-events-none select-none md:w-[380px] lg:w-[550px] drop-shadow-2xl'
               />
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
+
       {Features()}
       {TestimonialsSection()}
       {Demo()}
