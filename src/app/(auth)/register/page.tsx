@@ -18,36 +18,38 @@ import { registerFieldConfigs as fieldConfigs } from '@/data/FomData'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { IconUserFilled, IconCheck } from '@/lib/icons'
+import { auth_service } from '@/configs/auth'
+import { useToastStore } from '@/store/toastStore'
 
 const getDefaultValues = () => ({
-  userName: '',
+  username: '',
   email: '',
-  contactNo: '',
+  contact: '',
   password: '',
   confirm_password: '',
-  orgName: '',
+  name: '',
   address: '',
   city: '',
   state: '',
-  pinCode: '',
-  planSelected: '',
+  pincode: '',
+  plan: '',
 })
 
 const schema = z
   .object({
-    userName: z.string().min(5, 'Username is required'),
+    username: z.string().min(5, 'Username is required'),
     email: z.string().email('Invalid email'),
-    contactNo: z.string().min(10, 'Contact is required'),
+    contact: z.string().min(10, 'Contact is required'),
     password: z.string().min(6, 'Password must be at least 6 characters'),
     confirm_password: z
       .string()
       .min(6, 'Password must be at least 6 characters'),
-    orgName: z.string().min(1, 'Organization name required'),
+    name: z.string().min(1, 'Organization name required'),
     address: z.string().min(5, 'Address is required'),
     city: z.string().min(2, 'City is required'),
     state: z.string().min(2, 'State is required'),
-    pinCode: z.string().min(6, 'Pin code must be at least 6 characters'),
-    planSelected: z.string().min(1, 'Plan is required'),
+    pincode: z.string().min(6, 'Invalid pin code'),
+    plan: z.string(),
   })
   .refine((data) => data.password === data.confirm_password, {
     message: 'Passwords must match',
@@ -58,7 +60,7 @@ const steps = [
   {
     id: 1,
     title: 'Account Details',
-    fields: ['userName', 'email', 'contactNo'],
+    fields: ['username', 'email', 'contact'],
   },
   {
     id: 2,
@@ -68,12 +70,12 @@ const steps = [
   {
     id: 3,
     title: 'Organization Info',
-    fields: ['orgName', 'planSelected'],
+    fields: ['name', 'plan'],
   },
   {
     id: 4,
     title: 'Location',
-    fields: ['address', 'city', 'state', 'pinCode'],
+    fields: ['address', 'city', 'state', 'pincode'],
   },
 ]
 
@@ -81,6 +83,7 @@ const RegisterPage = () => {
   const [currentStep, setCurrentStep] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const showToast = useToastStore((state) => state.showToast)
 
   const form = useForm({
     resolver: zodResolver(schema),
@@ -91,16 +94,20 @@ const RegisterPage = () => {
   const onSubmit = async (payload: any) => {
     setIsLoading(true)
     try {
-      const data = {
-        ...payload,
-      }
-      console.log(data)
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      // Auth layout will handle redirect after registration
-      // For now, redirect to login
-      router.push('/login')
-    } catch (error) {
+      await auth_service.register(payload)
+
+      showToast({
+        message: 'Please check your email to verify your account.',
+        type: 'info',
+      })
+
+      router.push('/verify-email?email=' + encodeURIComponent(payload.email))
+    } catch (error: any) {
       console.error('Registration failed:', error)
+      showToast({
+        message: error?.response?.data?.message || 'An error occurred during registration. Please try again.',
+        type: 'error',
+      })
     } finally {
       setIsLoading(false)
     }

@@ -17,7 +17,7 @@ const LoginConfig = [
 
 const registerFieldConfigs = [
   {
-    name: "userName",
+    name: "username",
     label: "Username",
     placeholder: "e.g. john_doe",
     type: "text",
@@ -30,13 +30,13 @@ const registerFieldConfigs = [
     type: "text",
   },
   {
-    name: "contactNo",
+    name: "contact",
     label: "Contact Number",
     placeholder: "e.g. +1 234 567 890",
     type: "text",
   },
   {
-    name: "orgName",
+    name: "name",
     label: "Organisation Name",
     placeholder: "e.g. My Organisation",
     type: "text",
@@ -63,13 +63,13 @@ const registerFieldConfigs = [
   { name: "city", label: "City", placeholder: "e.g. New York", type: "text" },
   { name: "state", label: "State", placeholder: "e.g. NY", type: "text" },
   {
-    name: "pinCode",
+    name: "pincode",
     label: "Pin Code",
     placeholder: "e.g. 10001",
     type: "text",
   },
   {
-    name: "planSelected",
+    name: "plan",
     label: "Plan",
     placeholder: "e.g. Basic, Premium",
     type: "text",

@@ -2,7 +2,7 @@
 
 import { columns } from './columns'
 import { DataTable } from '@/components/ui/data-table'
-import React from 'react'
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,7 +14,6 @@ import _ from 'lodash'
 import { useRouter } from 'next/navigation'
 import { useToastStore } from '@/store/toastStore'
 import { useAuthStore } from '@/store/authStore'
-import useSWR from 'swr'
 import { employee_management } from '@/configs/employee'
 
 export default function Page() {
@@ -22,26 +21,60 @@ export default function Page() {
   const router = useRouter()
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
-  const { data, error, isLoading } = useSWR(
-    isAuthenticated ? 'employees-list' : null,
-    () => employee_management.getAllEmployees(),
-    {
-      onError: () => {
-        showToast({ message: 'Error fetching data', type: 'error' })
-      },
-    },
-  )
+  const [listData, setListData] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<any>(null)
+  const pageSize = 50
+  const sortModelRef = useRef<{ sort_by: string; type: 'asc' | 'desc' } | null>(null)
+  const [sortModel, setSortModel] = useState<{ sort_by: string; type: 'asc' | 'desc' } | null>(null)
+  const filterModel = {}
 
-  const listData = (data?.data as unknown[]) ?? []
+  const fetchData = useCallback(async (sort?: { sort_by: string; type: 'asc' | 'desc' } | null) => {
+    if (!isAuthenticated) return
+
+    setIsLoading(true)
+    setError(null)
+
+    try {
+      const response = await employee_management.getSSRMEmployees({
+        pageSize,
+        sortModel: sort || undefined,
+        filterModel,
+      })
+
+      setListData(response?.data?.rows ?? [])
+    } catch (err) {
+      setError(err)
+      showToast({ message: 'Error fetching data', type: 'error' })
+    } finally {
+      setIsLoading(false)
+    }
+  }, [isAuthenticated, showToast])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
   const breadcrumb_list = [
     { title: 'Dashboard', link: '/admin' },
     { title: 'Employee List' },
   ]
 
-  const handleRowClick = (rowData: { id: string }) => {
-    router.push(`/admin/employee/${rowData.id}`)
-  }
+  const handleSortChange = useCallback((newSortModel: { sort_by: string; type: 'asc' | 'desc' } | null) => {
+    sortModelRef.current = newSortModel
+    setSortModel(newSortModel)
+    fetchData(newSortModel)
+  }, [fetchData])
+
+  // Memoize DataTable props to prevent rerenders
+  const memoizedColumns = useMemo(() => columns, [])
+  const memoizedHandlers = useMemo(() => ({
+    fetchMoreData: () => {},
+    onRowClick: (rowData: { id: string }) => {
+      router.push(`/admin/employee/${rowData.id}`)
+    },
+    onSortChange: handleSortChange,
+  }), [handleSortChange, router])
 
   if (error && !listData.length) {
     return (
@@ -70,19 +103,27 @@ export default function Page() {
         </Breadcrumb>
       </div>
 
-      {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-secondary border-t-transparent" />
-        </div>
-      ) : (
-        <DataTable
-          columns={columns}
-          data={listData}
-          fetchMoreData={() => {}}
-          hasMoreData={true}
-          onRowClick={handleRowClick}
-        />
-      )}
+      <DataTable
+        columns={memoizedColumns as any}
+        data={listData}
+        onRowClick={memoizedHandlers.onRowClick}
+        onSortChange={memoizedHandlers.onSortChange}
+        currentSort={sortModel}
+        isLoading={isLoading}
+        enableRowSelection={true}
+        enableColumnPinning={true}
+        enableColumnReordering={true}
+        enableColumnFilters={true}
+        enableGlobalFilter={false}
+        onRowSelectionChange={(selectedRows) => {
+          console.log('Selected rows:', selectedRows)
+        }}
+        emptyState={
+          <div className="flex flex-col items-center justify-center py-12">
+            <p className="text-muted-foreground">No employees found</p>
+          </div>
+        }
+      />
     </div>
   )
 }
