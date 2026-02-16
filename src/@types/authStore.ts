@@ -1,17 +1,17 @@
-interface AuthState {
-  isAuthenticated: boolean;
-  isAdmin: boolean;
-  isEmployee: boolean;
-  isPatient: boolean;
-  loginMode: "patient" | "employee" | "admin";
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  } | null;
-  setLoginMode: (mode: "patient" | "employee" | "admin") => void;
-  login: (userData: any, mode: "patient" | "employee" | "admin") => void;
-  logout: () => void;
+import type { ROLES } from '@/configs/constant'
+
+/** User shape from auth API. Extend with additional fields as your API returns them. */
+export interface User {
+  id?: string
+  type: string
+  [key: string]: unknown
 }
 
-export type {AuthState}
+export interface AuthState {
+  user: User | null
+  accessToken: string | null
+  isAuthenticated: boolean
+  login: (username: string, password: string) => Promise<void>
+  fetchUser: () => Promise<void>
+  logout: () => void
+}

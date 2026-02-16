@@ -8,6 +8,7 @@ import {
 } from '@/lib/icons'
 import React, { useRef } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Grid } from '../ui/grid'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
@@ -50,15 +51,15 @@ function Demo() {
   return (
     <div ref={ref} className='relative py-16 bg-dashboard px-8 overflow-hidden'>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
         className='text-center max-w-2xl mx-auto mb-12'
       >
         <motion.h2
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          initial={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
           className='text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
         >
           Book a Demo with us
@@ -76,11 +77,11 @@ function Demo() {
         sort_by='priority'
         container_styles='[&]:gap-8 [&]:md:grid-cols-2 [&]:lg:grid-cols-4'
         item_styles='flex flex-col items-center'
-        item_renderer={(item, index) => (
+        item_renderer={(item: any) => (
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 * (index || 0) }}
+            initial={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
             className='relative'
           >
             <motion.div
@@ -163,15 +164,15 @@ function Features() {
   return (
     <div ref={ref} className='py-16 px-8 md:py-24 bg-dashboard text-center overflow-hidden'>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
         className='text-center max-w-2xl mx-auto mb-12'
       >
         <motion.h2
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          initial={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
           className='text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
         >
           Features
@@ -189,11 +190,11 @@ function Features() {
         sort_by='priority'
         container_styles='[&]:gap-8 [&]:md:grid-cols-2 [&]:lg:grid-cols-3'
         item_styles='flex flex-col items-center h-full'
-        item_renderer={(feature, index) => (
+        item_renderer={(feature: any) => (
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 * (index || 0) }}
+            initial={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
             className='h-full'
           >
             <motion.div
@@ -259,14 +260,14 @@ function TestimonialsSection() {
   return (
     <div ref={ref} className='py-16 md:py-24 bg-popover text-center overflow-hidden'>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
+        initial={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
       >
         <motion.h2
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          initial={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
           className='text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent'
         >
           Testimonials
@@ -284,9 +285,9 @@ function TestimonialsSection() {
           {testimonials.map((testimonial, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, x: 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 * idx }}
+              initial={{ opacity: 1, x: 0 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
               whileHover={{ y: -10 }}
             >
               <Card className='w-80 min-w-[300px] flex-shrink-0 shadow-xl hover:shadow-2xl transition-shadow bg-white'>
@@ -310,9 +311,9 @@ function TestimonialsSection() {
                     {[...Array(5)].map((_, i) => (
                       <motion.svg
                         key={i}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                        transition={{ delay: 0.3 + i * 0.1 }}
+                        initial={{ opacity: 1, scale: 1 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3 }}
                         className='w-5 h-5 fill-yellow-400'
                         viewBox='0 0 20 20'
                       >
@@ -390,13 +391,13 @@ function Home() {
 
         <motion.div
           style={{ y, opacity }}
-          className='flex h-full items-center justify-center md:justify-start pt-32 md:pt-44 md:max-w-[500px] lg:max-w-[900px] relative z-10'
+          className='flex h-full items-center justify-center md:justify-start pt-32 md:pt-24 md:max-w-[500px] lg:max-w-[900px] relative z-10'
         >
           <div className='flex items-center md:items-start flex-col w-full'>
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 1, scale: 1 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.3 }}
               className='md:hidden mb-10'
             >
               <Image
@@ -409,9 +410,9 @@ function Home() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.3 }}
               className='inline-block mb-6'
             >
               <motion.span
@@ -424,9 +425,9 @@ function Home() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.3 }}
               className='text-3xl text-center md:text-left md:text-4xl lg:text-7xl text-primary font-extrabold leading-tight'
             >
               Empowering Healthcare Through{' '}
@@ -436,16 +437,16 @@ function Home() {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.3 }}
               className='text-lg text-center md:text-left text-gray-600 mt-6 max-w-2xl'
             >
               Say goodbye to data chaos. Our smart, secure platform puts you in
               control of patient care with precision and ease.
             </motion.p>
 
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
@@ -476,46 +477,38 @@ function Home() {
                   ))}
                 </div>
               </Card>
-            </motion.div>
+            </motion.div> */}
 
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              transition={{ duration: 0.3 }}
               className='flex flex-col sm:flex-row gap-5 items-center mt-4 mb-16'
             >
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  variant='secondary'
-                  className='md:text-lg py-6 px-8 shadow-lg hover:shadow-xl transition-all'
-                  onClick={() => router.push('/login')}
-                >
-                  Get Started
+                <Button variant='secondary' className='md:text-lg py-6 px-8 shadow-lg hover:shadow-xl transition-all' asChild>
+                  <Link href='/login'>Get Started</Link>
                 </Button>
               </motion.div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  variant='ghost'
-                  onClick={() => router.push('/book-a-demo')}
-                  className='md:text-lg py-6 px-8'
-                >
-                  Book a Demo
+                <Button variant='ghost' className='md:text-lg py-6 px-8' asChild>
+                  <Link href='/book-a-demo'>Book a Demo</Link>
                 </Button>
               </motion.div>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1 }}
+              transition={{ duration: 0.3 }}
               className='grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-16'
             >
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 1, y: 0 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1 + index * 0.1 }}
+                  transition={{ duration: 0.3 }}
                   className='text-center'
                 >
                   <motion.h3
@@ -532,9 +525,9 @@ function Home() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, x: 100 }}
+          initial={{ opacity: 1, x: 0 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 0.3 }}
           className='absolute bottom-0 right-0 hidden md:flex items-end justify-end'
         >
           <div className='relative flex justify-center items-center'>
