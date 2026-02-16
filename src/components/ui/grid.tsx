@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+
+import React, { useMemo } from 'react'
 import { useId } from 'react'
 import clsx from 'clsx'
 
@@ -85,10 +87,10 @@ export function GridPattern({
       />
       {squares && (
         <svg x={x} y={y} className='overflow-visible'>
-          {squares.map(([x, y]) => (
+          {squares.map(([x, y], index) => (
             <rect
               strokeWidth='0'
-              key={`${x}-${y}`}
+              key={`${x}-${y}-${index}`}
               width={width + 1}
               height={height + 1}
               x={x * width}
@@ -108,13 +110,14 @@ export const GridBackground = ({
   pattern?: number[][]
   size?: number
 }) => {
-  const p = pattern ?? [
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-  ]
+  const p = useMemo(() => {
+    if (pattern) return pattern
+  
+    return Array.from({ length: 5 }, () => [
+      Math.floor(Math.random() * 4) + 7,
+      Math.floor(Math.random() * 6) + 1,
+    ])
+  }, [pattern])
 
   return (
     <div className='pointer-events-none absolute left-1/2 top-0 -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]'>
