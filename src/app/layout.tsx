@@ -3,6 +3,7 @@ import { Roboto_Mono } from 'next/font/google'
 import './globals.css'
 import Toast from '@/components/ui/toast'
 import { SWRConfigProvider } from '@/components/providers/SWRConfigProvider'
+import { Analytics } from "@vercel/analytics/next"
 
 const robotoMono = Roboto_Mono({ subsets: ['latin'] })
 
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={`${robotoMono.className} font-sans antialiased`}>
         <SWRConfigProvider>
           <Toast />
+          <Analytics/>
           {children}
         </SWRConfigProvider>
       </body>
