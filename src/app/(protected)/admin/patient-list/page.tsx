@@ -33,6 +33,7 @@ export default function Page() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   const [listData, setListData] = useState<any[]>([])
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<any>(null)
   const pageSize = 50
@@ -113,7 +114,7 @@ export default function Page() {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <Drawer>
+        <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
           <DrawerTrigger variant='secondary' className='w-full md:w-auto'>
             Add new patient
           </DrawerTrigger>
@@ -126,7 +127,12 @@ export default function Page() {
                 </Button>
               </DrawerClose>
             </DrawerHeader>
-            <AddPatient />
+            <AddPatient
+              onSuccess={() => {
+                setDrawerOpen(false)
+                fetchData()
+              }}
+            />
           </DrawerContent>
         </Drawer>
       </div>

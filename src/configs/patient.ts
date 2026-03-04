@@ -100,4 +100,48 @@ export const patient_management = {
     )
     return response.data
   },
+
+  addPatient: async (data: {
+    aadhar_number: number
+    email: string
+    username: string
+    first_name: string
+    last_name: string
+    gender: 'MALE' | 'FEMALE' | 'OTHER'
+    contact_number: number
+    emergency_contact: number
+    date_of_birth: string
+    age: number
+    blood_group: string
+    guardian_name?: string
+    profile?: string
+    added_by: string
+    organisation_id: string
+    image?: string
+  }) => {
+    const response = await axiosInstance.post(
+      `${API_BASE_URL}${ADMIN_ENDPOINTS.EMPLOYEE}/add-patient`,
+      data,
+    )
+    return response.data
+  },
+
+  uploadPatientImage: async (file: File): Promise<{ data?: { url: string } }> => {
+    const formData = new FormData()
+    formData.append('image', file)
+    const response = await axiosInstance.post(
+      `${API_BASE_URL}${ADMIN_ENDPOINTS.UPLOAD}/patient-image`,
+      formData,
+      { headers: { 'Content-Type': 'multipart/form-data' } },
+    )
+    return response.data
+  },
+
+  updatePatient: async (id: string, data: Record<string, unknown>) => {
+    const response = await axiosInstance.put(
+      `${API_BASE_URL}${ADMIN_ENDPOINTS.PATIENT}/${id}`,
+      data,
+    )
+    return response.data
+  },
 }

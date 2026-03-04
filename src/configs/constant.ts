@@ -14,6 +14,7 @@ export const ADMIN_ENDPOINTS = {
   PRESCRIPTION: '/prescription',
   MEDICATION: '/medication',
   AUDIO: '/audio',
+  UPLOAD: '/upload',
 }
 
 export const ROLES = {

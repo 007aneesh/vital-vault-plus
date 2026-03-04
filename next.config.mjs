@@ -13,6 +13,11 @@ const nextConfig = {
         hostname: 'vital-vault-bucket.vercel.app',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
     ],
   },
 }
