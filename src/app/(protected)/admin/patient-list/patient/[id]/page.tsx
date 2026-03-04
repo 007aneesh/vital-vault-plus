@@ -12,12 +12,14 @@ import { useToastStore } from '@/store/toastStore'
 import { ImageLinks } from '@/lib/imageLinks'
 import useSWR from 'swr'
 import { patient_management } from '@/configs/patient'
+import { PrescriptionMedicationSection } from '@/components/sections/PrescriptionMedicationSection'
+import type { VisitHistory, Prescription } from '@/@types/patient_types'
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params
   const showToast = useToastStore((state) => state.showToast)
 
-  const { data: response, error, isLoading } = useSWR(
+  const { data: response, error, isLoading, mutate: mutatePatient } = useSWR(
     id ? ['patient', id] : null,
     () => patient_management.getPatientById(id),
     {
@@ -27,7 +29,23 @@ const Page = ({ params }: { params: { id: string } }) => {
     },
   )
 
+  const { data: prescriptionsResponse, mutate: mutatePrescriptions } = useSWR(
+    id ? ['prescriptions'] : null,
+    () => patient_management.getPrescriptions(),
+  )
+
   const data = (response?.data ?? response) as Record<string, unknown> | undefined
+  const visits = (data?.visits ?? []) as VisitHistory[]
+  const visitIds = visits.map((v) => v.id)
+  const allPrescriptions = (prescriptionsResponse?.data ?? prescriptionsResponse) as Prescription[] | undefined
+  const prescriptions = Array.isArray(allPrescriptions)
+    ? allPrescriptions.filter((p) => visitIds.includes(p.visit_id))
+    : []
+
+  const handleRefresh = () => {
+    mutatePatient()
+    mutatePrescriptions()
+  }
 
   const handle_render_patient_profile = (payload: Record<string, unknown> | undefined) => {
     if (!payload) return null
@@ -52,20 +70,20 @@ const Page = ({ params }: { params: { id: string } }) => {
             {String(payload?.gender ?? '')} | {String(address?.city ?? '')} | {String(payload?.occupation ?? '')}
           </p>
           <p className='text-gray-600'>
-            Date of Birth: {String(payload?.date_of_birth ?? '')}
+            Date of Birth: {String(payload?.date_of_birth ?? '-- ')}
           </p>
           <div className='grid grid-cols-2 gap-4 mt-4'>
             <div>
-              <strong>Aadhar Number:</strong> {String(payload?.aadhar_number ?? '')}
+              <strong>Aadhar Number:</strong> {String(payload?.aadhar_number ?? '-- ')}
             </div>
             <div>
-              <strong>Email:</strong> {String(payload?.email ?? '')}
+              <strong>Email:</strong> {String(payload?.email ?? '-- ')}
             </div>
             <div>
-              <strong>Weight:</strong> {String(payload?.weight ?? '')}kg
+              <strong>Weight:</strong> {String(payload?.weight ?? '-- ')}kg
             </div>
             <div>
-              <strong>Height:</strong> {String(payload?.height ?? '')}cm
+              <strong>Height:</strong> {String(payload?.height ?? '-- ')}cm
             </div>
             <div>
               <strong>Blood Group:</strong> {String(payload?.blood_group ?? '')}
@@ -181,6 +199,16 @@ const Page = ({ params }: { params: { id: string } }) => {
         {!_.isEmpty(data?.medical_history) &&
           handle_render_medical_history({ data: data?.medical_history as typeof medical_history_config })}
       </div>
+      {id && (
+        <div className='mb-6'>
+          <PrescriptionMedicationSection
+            patientId={id}
+            visits={visits}
+            prescriptions={prescriptions}
+            onRefresh={handleRefresh}
+          />
+        </div>
+      )}
       {handle_render_medications({ data: medications_config })}
     </div>
   )

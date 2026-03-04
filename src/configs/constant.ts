@@ -11,6 +11,9 @@ export const ADMIN_ENDPOINTS = {
   EMPLOYEE: '/employee',
   PATIENT: '/patient',
   DASHBOARD: '/admin/dashboard',
+  PRESCRIPTION: '/prescription',
+  MEDICATION: '/medication',
+  AUDIO: '/audio',
 }
 
 export const ROLES = {

@@ -1,5 +1,6 @@
 import { API_BASE_URL, ADMIN_ENDPOINTS } from './constant'
 import axiosInstance from '@/lib/axios'
+import type { ParseTranscriptResponse } from '@/@types/patient_types'
 
 export interface SSRMParams {
   pageSize: number
@@ -32,5 +33,71 @@ export const patient_management = {
     } catch (error) {
       throw error
     }
+  },
+
+  createVisit: async (data: {
+    patient_id: string
+    visit_date: string
+    reason_for_visit?: string
+    doctor_name?: string
+    department?: string
+    hospital_name?: string
+    notes?: string
+  }) => {
+    const response = await axiosInstance.post(
+      `${API_BASE_URL}${ADMIN_ENDPOINTS.PATIENT}/visit/create`,
+      data,
+    )
+    return response.data
+  },
+
+  createPrescription: async (data: {
+    prescribed_by: string
+    prescription_date: string
+    visit_id: string
+    notes?: string
+  }) => {
+    const response = await axiosInstance.post(
+      `${API_BASE_URL}${ADMIN_ENDPOINTS.PRESCRIPTION}/add`,
+      data,
+    )
+    return response.data
+  },
+
+  createMedication: async (data: {
+    name: string
+    dose: string
+    prescription_id: string
+    frequency?: string
+    duration?: string
+    notes?: string
+  }) => {
+    const response = await axiosInstance.post(
+      `${API_BASE_URL}${ADMIN_ENDPOINTS.MEDICATION}/add`,
+      data,
+    )
+    return response.data
+  },
+
+  getPrescriptions: async () => {
+    const response = await axiosInstance.get(
+      `${API_BASE_URL}${ADMIN_ENDPOINTS.PRESCRIPTION}/`,
+    )
+    return response.data
+  },
+
+  getMedications: async () => {
+    const response = await axiosInstance.get(
+      `${API_BASE_URL}${ADMIN_ENDPOINTS.MEDICATION}/`,
+    )
+    return response.data
+  },
+
+  parseTranscript: async (transcript: string): Promise<{ data?: ParseTranscriptResponse }> => {
+    const response = await axiosInstance.post(
+      `${API_BASE_URL}${ADMIN_ENDPOINTS.AUDIO}/parse-transcript`,
+      { transcript },
+    )
+    return response.data
   },
 }
