@@ -176,6 +176,13 @@ const LoginPage = () => {
             <IconShieldCheckFilled className='w-4 h-4 text-secondary' />
             <span>Secured with enterprise-grade encryption</span>
           </div>
+          <div className='flex items-center justify-center gap-2 text-sm text-gray-600 mt-5 bg-gray-100 p-4 rounded-lg'>
+            <div className='flex flex-col items-center justify-center gap-2'>
+              <h1 className='font-bold'>Demo Account</h1>
+              <p className='text-sm text-gray-600'>Username: admin01</p>
+              <p className='text-sm text-gray-600'>Password: admin123</p>
+            </div>
+          </div>
         </motion.div>
       </motion.div>
 
